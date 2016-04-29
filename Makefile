@@ -6,7 +6,7 @@
 #    By: sganon <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/23 12:32:31 by sganon            #+#    #+#              #
-#    Updated: 2016/04/18 18:28:57 by sganon           ###   ########.fr        #
+#    Updated: 2016/04/29 16:13:46 by sganon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ NAME =	RTv1
 SRC =	main.c \
 		init.c \
 		key_events.c \
+		parsing.c \
+		camera_parsing.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

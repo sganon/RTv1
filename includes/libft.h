@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 11:15:53 by sganon            #+#    #+#             */
-/*   Updated: 2016/03/21 17:14:48 by sganon           ###   ########.fr       */
+/*   Updated: 2016/04/29 15:10:51 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 # define BUFF_SIZE 16
 # include <stdlib.h>
 
+# define ANSI_COLOR_RED     "\033[31m"
+# define ANSI_COLOR_GREEN   "\033[32m"
+# define ANSI_COLOR_YELLOW  "\033[33m"
+# define ANSI_COLOR_BLUE    "\033[34m"
+# define ANSI_COLOR_MAGENTA "\033[35m"
+# define ANSI_COLOR_CYAN    "\033[36m"
+# define ANSI_COLOR_RESET   "\033[0m"
+
 typedef struct		s_list
 {
 	void			*content;
@@ -25,12 +33,14 @@ typedef struct		s_list
 }					t_list;
 
 int					get_next_line(int const fd, char **line);
+int					ft_nllen(char *str);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(const void *s, int c, size_t n);
+void				ft_error(char *s, int fd);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t				ft_strlen(const char *s);
 char				*ft_strdup(const char *s1);

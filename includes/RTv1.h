@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/18 20:00:07 by sganon           ###   ########.fr       */
+/*   Updated: 2016/04/29 16:13:47 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "../mlx/mlx.h"
 # include <math.h>
 
-# define WIN_X	1920
-# define WIN_Y	1080
+# define WIN_X	680
+# define WIN_Y	480
 
 # define ESC	53
 
@@ -25,9 +25,9 @@ typedef unsigned char	t_bytes;
 
 typedef struct			s_rgb
 {
-	t_bytes				r;
-	t_bytes				g;
 	t_bytes				b;
+	t_bytes				g;
+	t_bytes				r;
 }						t_rgb;
 
 typedef struct			s_color
@@ -35,6 +35,37 @@ typedef struct			s_color
 	int					color;
 	t_rgb				rgb;
 }						t_color;
+
+typedef struct			s_pos
+{
+	double				x;
+	double				y;
+	double				z;
+}						t_pos;
+
+/* obj id :
+ * 0 = camera;
+ * 1 = sphere;
+ * 2 = plan;
+ * 3 = cone;
+ * 4 = cylindre;
+ */
+
+/* obj color:
+ * 0 = white
+ * 1 = red
+ * 2 = blue
+ * 3 = green
+ * 4 = yellow
+ */
+
+typedef struct			s_objs
+{
+	int					id;
+	t_pos				pos_obj;
+	int					color;
+	struct s_objs 		*next;
+}						t_objs;
 
 typedef struct			s_env
 {
@@ -53,5 +84,7 @@ typedef struct			s_env
 int						init_env(t_env *e);
 int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
+int						parsing(char *filename, t_env *e, t_objs *obj);
+int						get_camera(char *str, t_objs *obj);
 
 # endif

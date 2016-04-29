@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:15:17 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/18 21:06:21 by sganon           ###   ########.fr       */
+/*   Updated: 2016/04/19 14:47:06 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		create_image(t_env *e)
 	e->img_ptr = mlx_new_image(e->mlx, WIN_X, WIN_Y);
 	if (!e->img_ptr)
 		return (0);
-	e->img = mlx_get_data_addr(e->img_ptr, &e->bpp, &e->sl, &e->end);
+	e->img = mlx_get_data_addr(e->img_ptr, &(e->bpp), &(e->sl), &(e->end));
 	return (1);
 }
 
