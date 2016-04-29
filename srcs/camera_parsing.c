@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:04:26 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 16:39:08 by sganon           ###   ########.fr       */
+/*   Updated: 2016/04/29 18:46:09 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,17 @@ static void	stock_cam_coord(char *str, int step, t_objs *obj)
 		obj->pos_obj.z = ft_atoi(str);
 }
 
-static void	check_format(char *str, int i)
+void		check_format(char *str, int i)
 {
 	while(str[i] && str[i] != ')')
 	{
 		if (!ft_isdigit(str[i]) && !ft_isspace(str[i]) && str[i] != ','
 				&&str[i] != '-')
 		{
-			ft_error("Bad character for camera description.", 2);
-			ft_error("Format expected: camera (x, y, z)", 2);
+			ft_error("Bad character for camera/object description.", 2);
 		}
 		if (str[i] == '\n')
-			ft_error("')' expected for camera coordinate", 2);
+			ft_error("')' expected for camera/object coordinate", 2);
 		i++;
 	}
 }
@@ -81,5 +80,7 @@ int			get_camera(char	*str, t_objs *obj)
 		i++;
 	if (cam_start[i] == '(')
 		check_cam_coord(cam_start, i + 1, obj);
+	else
+		ft_error("')' expected for camera coordinate", 2);
 	return (1);
 }

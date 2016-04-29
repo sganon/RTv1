@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 16:13:47 by sganon           ###   ########.fr       */
+/*   Updated: 2016/04/29 18:44:02 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ typedef struct			s_pos
 
 /* obj id :
  * 0 = camera;
- * 1 = sphere;
- * 2 = plan;
- * 3 = cone;
- * 4 = cylindre;
+ * 6 = sphere;
+ * 5 = plan;
+ * 4 = cone;
+ * 8 = cylindre;
  */
 
 /* obj color:
@@ -86,5 +86,6 @@ int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
 int						parsing(char *filename, t_env *e, t_objs *obj);
 int						get_camera(char *str, t_objs *obj);
+void					check_format(char *str, int i);
 
 # endif
