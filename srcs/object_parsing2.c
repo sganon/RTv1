@@ -14,36 +14,17 @@
 
 #include <stdio.h>
 
-t_objs		*get_data(char *str, t_objs *obj)
+void	parse_coord(char *str, int step, t_objs *obj)
 {
-	if (!(get_camera(str, obj)))
-		ft_error("Camera description not found. Please add one", 2);
-	if (!(obj = get_obj(str, obj)))
-		ft_error("No object description found. Please add one", 2);
-	return (obj);
-}
-
-t_objs		*parsing(char *filename, t_env *e, t_objs *obj)
-{
-	int		fd;
-	char	*str;
-	char	*tmp;
-	int		ret;
-
-	(void)e;
-	if ((fd = open(filename, O_RDONLY)) < 3)
-		return (0);
-	tmp = ft_strnew(1);
-	while (42)
-	{
-		ret = get_next_line(fd, &str);
-		if (ret != 1)
-			break ;
-		tmp = ft_strjoin(tmp, str);
-		tmp = ft_strjoin(tmp, "\n");
-	}
-	if (ret == -1)
-		return (0);
-	ft_putendl(tmp);
-	return (get_data(tmp, obj));
+	printf("step: %d  buffer: %s\n", step, str);
+	if (step == 0)
+		obj->pos_obj.x = ft_atoi(str);
+	if (step == 1)
+		obj->pos_obj.y = ft_atoi(str);
+	if (step == 2)
+		obj->pos_obj.z = ft_atoi(str);
+	if (step == 3 && obj->id == 6)
+		obj->rayon = ft_atoi(str); 
+	if (step == 4 && obj->id == 6)
+		obj->color = ft_atoi(str); 
 }

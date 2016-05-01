@@ -63,6 +63,7 @@ typedef struct			s_objs
 {
 	int					id;
 	t_pos				pos_obj;
+	int				rayon;
 	int					color;
 	struct s_objs 		*next;
 }						t_objs;
@@ -84,8 +85,10 @@ typedef struct			s_env
 int						init_env(t_env *e);
 int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
-int						parsing(char *filename, t_env *e, t_objs *obj);
+t_objs						*parsing(char *filename, t_env *e, t_objs *obj);
 int						get_camera(char *str, t_objs *obj);
 void					check_format(char *str, int i);
+void					parse_coord(char *str, int step, t_objs *obj);
+t_objs					*get_obj(char *str, t_objs *obj);
 
 # endif

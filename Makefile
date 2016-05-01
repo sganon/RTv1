@@ -17,6 +17,8 @@ SRC =	main.c \
 		key_events.c \
 		parsing.c \
 		camera_parsing.c \
+		object_parsing.c \
+		object_parsing2.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

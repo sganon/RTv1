@@ -16,7 +16,14 @@
 
 void	print_list(t_objs *obj)
 {
-	printf("id: %d\n pos_x: %f\n pos_y: %f\n, pos_z: %f\n", obj->id, obj->pos_obj.x, obj->pos_obj.y, obj->pos_obj.z);
+	while (obj)
+	{
+		printf("id: %d\n pos_x: %f\n pos_y: %f\n, pos_z: %f\n", obj->id, obj->pos_obj.x, obj->pos_obj.y, obj->pos_obj.z);
+		if (obj->id == 6)
+			printf("rayon: %d\n color: %d\n", obj->rayon, obj->color);
+		printf("~~~~~~~~~~~~~~~~~\n");
+		obj = obj->next;
+	}
 }
 
 int		expose_hook(t_env *e)
