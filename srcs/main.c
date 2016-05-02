@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:11:00 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 16:15:49 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/02 15:00:27 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_list(t_objs *obj)
 {
 	while (obj)
 	{
-		printf("id: %d\n pos_x: %f\n pos_y: %f\n, pos_z: %f\n", obj->id, obj->pos_obj.x, obj->pos_obj.y, obj->pos_obj.z);
+		printf("id: %d\n pos_x: %f\n pos_y: %f\n pos_z: %f\n", obj->id, obj->pos_obj.x, obj->pos_obj.y, obj->pos_obj.z);
 		if (obj->id == 6)
 			printf("rayon: %d\n color: %d\n", obj->rayon, obj->color);
 		printf("~~~~~~~~~~~~~~~~~\n");

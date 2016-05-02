@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 18:47:37 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/02 15:38:48 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		get_obj_type(char *str)
 		return (6);
 	if (str[0] == 'c' && str[1] == 'y')
 		return (8);
-	if (str[0] == 'c' && str[0] == 'o')
+	if (str[0] == 'c' && str[1] == 'o')
 		return (4);
 	if (str[0] == 'p')
 		return (5);
@@ -31,7 +31,7 @@ int		get_obj_type(char *str)
 
 void	get_coord(char *str, int i, t_objs *obj)
 {
-	char	buffer[256];
+	char	buffer[12];
 	int	tmp;
 	int	step;
 
@@ -43,15 +43,16 @@ void	get_coord(char *str, int i, t_objs *obj)
 		if (str[i] == ',' || str[i] == ')')
 		{
 			parse_coord(buffer, step, obj);
-			ft_bzero(buffer, 256);
+			ft_bzero(buffer, 12);
 			if (str[i] == ')')
 				break ;
 			step++;
 			tmp = 0;
 			i++;
 		}
-		if (tmp <= 255)
-			buffer[tmp] = str[i];
+		if (tmp > 11)
+			ft_error("Int is too big.", 2);
+		buffer[tmp] = str[i];
 		tmp++;
 		i++;
 	}
@@ -63,6 +64,7 @@ void	get_obj_coord(char *str, t_objs *obj)
 
 	i = get_obj_type(str);
 	obj->id = i;
+	printf("i: %d\n", i);
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '(')

@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:04:26 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 18:46:09 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/02 15:28:44 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		check_format(char *str, int i)
 static void	check_cam_coord(char *str, int i, t_objs *obj)
 {
 	int		tmp;
-	char	buffer[256];
+	char	buffer[12];
 	int		step;
 
 	tmp = 0;
@@ -53,15 +53,16 @@ static void	check_cam_coord(char *str, int i, t_objs *obj)
 		if (str[i] == ',' || str[i] == ')')
 		{
 			stock_cam_coord(buffer, step, obj);
-			ft_bzero(buffer, 256);
+			ft_bzero(buffer, 12);
 			if (str[i] == ')')
 				break ;
 			tmp = 0;
 			step++;
 			i++;
 		}
-		if (tmp <= 255)
-			buffer[tmp] = str[i];
+		if (tmp > 11)
+			ft_error("Int is too big.", 2);
+		buffer[tmp] = str[i];
 		tmp++;
 		i++;
 	}
