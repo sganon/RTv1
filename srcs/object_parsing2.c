@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/02 15:09:56 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/02 16:18:49 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 void	parse_coord(char *str, int step, t_objs *obj)
 {
-	printf("step: %d  buffer: %s\n", step, str);
 	if (step > 4 && obj->id == 6)
 		ft_error("Too much argument for sphere declaration, expcted: 5", 2);
 	if (step > 2 && obj->id != 6)

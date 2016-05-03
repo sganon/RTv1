@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:04:26 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/02 15:28:44 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/02 16:13:37 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ static void	stock_cam_coord(char *str, int step, t_objs *obj)
 		obj->pos_obj.y = ft_atoi(str);
 	if (step == 2)
 		obj->pos_obj.z = ft_atoi(str);
+	if (step == 3)
+		obj->rotate.x = ft_atoi(str);
+	if (step == 4)
+		obj->rotate.y = ft_atoi(str);
+	if (step == 5)
+		obj->rotate.z = ft_atoi(str);
 }
 
 void		check_format(char *str, int i)
@@ -48,7 +54,7 @@ static void	check_cam_coord(char *str, int i, t_objs *obj)
 	check_format(str, i);
 	while (str[i] != '\n')
 	{
-		if (step > 3)
+		if (step > 5)
 			ft_error("Too much coordinate for camera: expected 3", 2);
 		if (str[i] == ',' || str[i] == ')')
 		{

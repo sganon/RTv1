@@ -6,7 +6,7 @@
 #    By: sganon <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/23 12:32:31 by sganon            #+#    #+#              #
-#    Updated: 2016/04/29 16:13:46 by sganon           ###   ########.fr        #
+#    Updated: 2016/05/03 10:31:28 by sganon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ SRC =	main.c \
 		camera_parsing.c \
 		object_parsing.c \
 		object_parsing2.c \
+		ray_cast.c \
+		math_vector.c \
+		rotate.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/02 15:38:48 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/02 16:18:49 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	get_obj_coord(char *str, t_objs *obj)
 
 	i = get_obj_type(str);
 	obj->id = i;
-	printf("i: %d\n", i);
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '(')
@@ -122,8 +121,6 @@ t_objs		*get_obj(char *str, t_objs *obj)
 		obj = obj->next;
 		get_obj_coord(str, obj);
 		str = ft_trim(str);
-		ft_putstr(str);
-		ft_putendl("-------");
 	}
 	obj->next = NULL;
 	return (begin);

@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 18:44:02 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/03 13:43:17 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,24 @@
 
 # define WIN_X	680
 # define WIN_Y	480
+# define FOV	66
 
 # define ESC	53
+
+# define SQR(x)	(x * x)
 
 typedef unsigned char	t_bytes;
 
 typedef struct			s_rgb
 {
-	t_bytes				b;
-	t_bytes				g;
 	t_bytes				r;
+	t_bytes				g;
+	t_bytes				b;
 }						t_rgb;
 
-typedef struct			s_color
+typedef union			u_color
 {
-	int					color;
+	size_t				color;
 	t_rgb				rgb;
 }						t_color;
 
@@ -63,7 +66,8 @@ typedef struct			s_objs
 {
 	int					id;
 	t_pos				pos_obj;
-	int				rayon;
+	t_pos				rotate;
+	int					rayon;
 	int					color;
 	struct s_objs 		*next;
 }						t_objs;
@@ -80,15 +84,22 @@ typedef struct			s_env
 	int					bpp;
 	int					sl;
 	int					end;
+	t_objs				*begin_list;
 }						t_env;
 
 int						init_env(t_env *e);
 int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
-t_objs						*parsing(char *filename, t_env *e, t_objs *obj);
 int						get_camera(char *str, t_objs *obj);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
+void					cast(t_env *e, t_objs *obj);
 t_objs					*get_obj(char *str, t_objs *obj);
+t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
+t_pos					normalize_vector(t_pos vector);
+t_pos					vector_double(t_pos v);
+t_pos					new_vector(t_pos v1, t_pos v2);
+t_pos					rotate_vector(t_pos vector, t_objs *obj, t_env *e);
+double					vector_scalar(t_pos v1, t_pos v2);
 
 # endif
