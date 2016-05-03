@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/02 16:18:49 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/03 19:25:45 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	parse_coord(char *str, int step, t_objs *obj)
 	if (step > 2 && obj->id != 6)
 		ft_error("Too much argument for object declaration, expcted: 3", 2);
 	if (step == 0)
-		obj->pos_obj.x = ft_atoi(str);
+		obj->x = ft_atoi(str);
 	if (step == 1)
-		obj->pos_obj.y = ft_atoi(str);
+		obj->y = ft_atoi(str);
 	if (step == 2)
-		obj->pos_obj.z = ft_atoi(str);
+		obj->z = ft_atoi(str);
 	if (step == 3 && obj->id == 6)
 		obj->rayon = ft_atoi(str); 
 	if (step == 4 && obj->id == 6)

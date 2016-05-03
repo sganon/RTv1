@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 13:58:03 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/03 20:37:21 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	draw_in_img(t_env *e, int x, int y)
 {
-	int	p;
+	int		p;
 	t_color	u;
 
 	if (x < WIN_X && y < WIN_Y)
@@ -28,7 +28,7 @@ void	draw_in_img(t_env *e, int x, int y)
 	}
 }
 
-t_pos	normalize_vector(t_pos vector)
+t_vector	normalize_vector(t_vector vector)
 {
 	double	norme;
 
@@ -39,42 +39,33 @@ t_pos	normalize_vector(t_pos vector)
 	return (vector);
 }
 
-t_pos	get_vector(t_pos vector, int x, int y)
+t_vector	get_vector(t_vector vector, int x, int y)
 {
-	vector.x = -33.+ (double)FOV / (double)WIN_X * (double)x;
+	vector.x = -33. + (double)FOV / (double)WIN_X * (double)x;
 	vector.y = 33. - (double)FOV / (double)WIN_Y * (double)y;
 	vector.z = 60.;
 	return (normalize_vector(vector));
 }
 
-void	get_intersect(t_pos vector, t_objs *obj, t_env *e, int x, int y)
+void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 {
 	double	delta;
-	t_pos	d;
-	double	s1;
-	double	s2;
 	double	a;
 	double	b;
 	double	c;
-	
-	d = new_vector(obj->pos_obj, obj->next->pos_obj);
-	s1 = -1;
-	s2 = -1;
-	a = SQR(vector.x) + SQR(vector.y) + SQR(vector.z);
-	b = 2. * ((d.x * vector.x) + (d.y * vector.y) + (d.z * vector.z));
-	c = SQR(d.x) + SQR(d.y) + SQR(d.z) - SQR(obj->next->rayon);
-//	a =  vector_scalar(vector, vector);
-//	b = vector_scalar(vector_double(new_vector(obj->pos_obj, obj->next->pos_obj)), vector);
-//	c = vector_scalar(new_vector(obj->pos_obj, obj->next->pos_obj), new_vector(obj->pos_obj, obj->next->pos_obj)) - (obj->next->rayon * obj->next->rayon);
-	delta = SQR(b) - 4. * a * c;
-//	printf("a: %f\nb: %f\nc: %f\n", a, b, c);
-//	printf("delta: %f\n~~~~\n", delta);
+
+	a = e->vector.x * e->vector.x + e->vector.y * e->vector.y + e->vector.z * e->vector.z;
+	b = 2. * (((e->cam.x - obj->x) * e->vector.x) + ((e->cam.y - obj->y) * e->vector.y) + ((e->cam.z - obj->z) * e->vector.z));
+	c = pow(e->cam.x - obj->x, 2.) + pow(e->cam.y - obj->y, 2.) + pow(e->cam.z - obj->z, 2.) - pow(obj->rayon, 2.);
+	delta = b * b - 4. * a * c;
+	//	printf("a: %f\nb: %f\nc: %f\n", a, b, c);
+	//	printf("delta: %f\n~~~~\n", delta);
 	if (delta < 0)
 		return ;
-	s1 = (-b + sqrt(delta)) / (2. * a);
-	s2 = (-b - sqrt(delta)) / (2. * a);
-//	printf("~~~~\ns1: %f\ns2: %f\n~~~~~\n", s1, s2);
-	if (s1 >= 0 || s2 >= 0)
+	obj->s1 = (-b + sqrt(delta)) / (2. * a);
+	obj->s2 = (-b - sqrt(delta)) / (2. * a);
+	//	printf("~~~~\ns1: %f\ns2: %f\n~~~~~\n", s1, s2);
+	if (obj->s1 >= 0 || obj->s2 >= 0)
 		draw_in_img(e, x, y);
 }
 
@@ -82,20 +73,24 @@ void	cast(t_env *e, t_objs *obj)
 {
 	int	y;
 	int	x;
-	t_pos	vector;
 
-	x = 0;
-	while (x < WIN_X)
+	while (obj)
 	{
-		y = 0;
-		while (y < WIN_Y)
+		printf("id: %d\n", obj->id);
+		x = 0;
+		while (x < WIN_X)
 		{
-			vector = get_vector(vector, x, y);
-			vector = rotate_vector(vector, obj, e);
-			//printf("vector_x: %f\nvector_y: %f\nvector_z: %f\n", vector.x, vector.y, vector.z);
-			get_intersect(vector, obj, e, x, y);
-			y++;
+			y = 0;
+			while (y < WIN_Y)
+			{
+				e->vector = get_vector(e->vector, x, y);
+				//e->vector = rotate_vector(e->vector, obj, e);
+				if (obj->id == 6)
+					get_intersect(obj, e, x, y);
+				y++;
+			}
+			x++;
 		}
-		x++;
+		obj = obj->next;
 	}
 }

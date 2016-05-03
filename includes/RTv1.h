@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 13:43:17 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/03 20:38:10 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "../mlx/mlx.h"
 # include <math.h>
 
-# define WIN_X	680
-# define WIN_Y	480
+# define WIN_X	1000
+# define WIN_Y	1000
 # define FOV	66
 
 # define ESC	53
@@ -39,12 +39,22 @@ typedef union			u_color
 	t_rgb				rgb;
 }						t_color;
 
-typedef struct			s_pos
+typedef struct			s_cam
 {
 	double				x;
 	double				y;
 	double				z;
-}						t_pos;
+	double				rx;
+	double				ry;
+	double				rz;
+}						t_cam;
+
+typedef struct			s_vector
+{
+	double				x;
+	double				y;
+	double				z;
+}						t_vector;
 
 /* obj id :
  * 0 = camera;
@@ -65,10 +75,16 @@ typedef struct			s_pos
 typedef struct			s_objs
 {
 	int					id;
-	t_pos				pos_obj;
-	t_pos				rotate;
+	double				x;
+	double				y;
+	double				z;
+	double				rx;
+	double				ry;
+	double				rz;
 	int					rayon;
 	int					color;
+	double				s1;
+	double				s2;
 	struct s_objs 		*next;
 }						t_objs;
 
@@ -84,6 +100,8 @@ typedef struct			s_env
 	int					bpp;
 	int					sl;
 	int					end;
+	t_cam				cam;
+	t_vector			vector;
 	t_objs				*begin_list;
 }						t_env;
 
@@ -96,10 +114,10 @@ void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
 t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
-t_pos					normalize_vector(t_pos vector);
-t_pos					vector_double(t_pos v);
-t_pos					new_vector(t_pos v1, t_pos v2);
-t_pos					rotate_vector(t_pos vector, t_objs *obj, t_env *e);
-double					vector_scalar(t_pos v1, t_pos v2);
+t_vector				normalize_vector(t_vector vector);
+t_vector				vector_double(t_vector v);
+t_vector				new_vector(t_vector v1, t_vector v2);
+t_vector				rotate_vector(t_vector vector, t_objs *obj, t_env *e);
+double					vector_scalar(t_vector v1, t_vector v2);
 
 # endif

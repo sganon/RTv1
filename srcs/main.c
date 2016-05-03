@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:11:00 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 11:35:49 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/03 20:18:13 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@ void	print_list(t_objs *obj)
 {
 	while (obj)
 	{
-		printf(" id: %d\n pos_x: %f\n pos_y: %f\n pos_z: %f\n", obj->id, obj->pos_obj.x, obj->pos_obj.y, obj->pos_obj.z);
+		printf(" id: %d\n pos_x: %f\n pos_y: %f\n pos_z: %f\n", obj->id, obj->x, obj->y, obj->z);
 		if (obj->id == 6)
 			printf(" rayon: %d\n color: %d\n", obj->rayon, obj->color);
-		if (obj->id == 0)
-			printf(" rotate_x: %f\n rotate_y: %f\n rotate_z: %f\n", obj->rotate.x, obj->rotate.y, obj->rotate.z);
 		printf("~~~~~~~~~~~~~~~~~\n");
 		obj = obj->next;
 	}
@@ -38,6 +36,19 @@ int		expose_hook(t_env *e)
 	return (1);
 }
 
+t_objs	*manage_data(t_env *e, t_objs *obj)
+{
+	obj->x = e->cam.x;
+	obj->y = e->cam.y;
+	obj->z = e->cam.z;
+	obj->rx = e->cam.rx;
+	obj->ry = e->cam.ry;
+	obj->rz = e->cam.rz;
+	if (obj->next)
+		obj = obj->next;
+	return (obj);
+}
+
 int		main(int argc, char **argv)
 {
 	t_env	*e;
@@ -50,6 +61,7 @@ int		main(int argc, char **argv)
 		if (!(init_env(e)))
 			return(0);
 		obj = parsing(argv[1], e, obj);
+		obj = manage_data(e, obj);
 		print_list(obj);
 		e->begin_list = obj;
 		mlx_expose_hook(e->win, expose_hook, e);
