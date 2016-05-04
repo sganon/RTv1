@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 20:38:10 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/04 18:31:08 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 # define WIN_X	1000
 # define WIN_Y	1000
 # define FOV	66
+
+# define SPH	6
+# define CYL	8
+# define CON	4
+# define PLA	5
 
 # define ESC	53
 
@@ -102,6 +107,7 @@ typedef struct			s_env
 	int					end;
 	t_cam				cam;
 	t_vector			vector;
+	t_vector			light;
 	t_objs				*begin_list;
 }						t_env;
 
@@ -112,6 +118,7 @@ int						get_camera(char *str, t_objs *obj);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
+void					get_light(char *str, t_env *e);
 t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);

@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:04:26 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 20:17:37 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/04 18:30:34 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		check_format(char *str, int i)
 	while(str[i] && str[i] != ')')
 	{
 		if (!ft_isdigit(str[i]) && !ft_isspace(str[i]) && str[i] != ','
-				&&str[i] != '-')
+				&& str[i] != '-' && str[i] != '.')
 		{
 			ft_error("Bad character for camera/object description.", 2);
 		}

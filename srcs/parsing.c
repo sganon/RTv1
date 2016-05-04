@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 18:41:05 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/04 18:19:06 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 #include <stdio.h>
 
-t_objs		*get_data(char *str, t_objs *obj)
+t_objs		*get_data(char *str, t_objs *obj, t_env *e)
 {
 	if (!(get_camera(str, obj)))
 		ft_error("Camera description not found. Please add one", 2);
 	if (!(obj = get_obj(str, obj)))
 		ft_error("No object description found. Please add one", 2);
+	get_light(str, e);
 	return (obj);
 }
 
@@ -45,5 +46,5 @@ t_objs		*parsing(char *filename, t_env *e, t_objs *obj)
 	if (ret == -1)
 		return (0);
 	ft_putendl(tmp);
-	return (get_data(tmp, obj));
+	return (get_data(tmp, obj, e));
 }

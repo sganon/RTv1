@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 11:15:53 by sganon            #+#    #+#             */
-/*   Updated: 2016/04/29 15:10:51 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/04 18:29:21 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <fcntl.h>
 # define BUFF_SIZE 16
 # include <stdlib.h>
+# include <string.h>
+# include <stdio.h>
 
 # define ANSI_COLOR_RED     "\033[31m"
 # define ANSI_COLOR_GREEN   "\033[32m"
@@ -25,6 +27,15 @@
 # define ANSI_COLOR_CYAN    "\033[36m"
 # define ANSI_COLOR_RESET   "\033[0m"
 
+typedef struct		s_info
+{
+	double			a;
+	int				e;
+	int				c;
+	int				sign;
+	int				i;
+}					t_info;
+
 typedef struct		s_list
 {
 	void			*content;
@@ -32,6 +43,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+double				ft_atof(char *s);
 int					get_next_line(int const fd, char **line);
 int					ft_nllen(char *str);
 void				*ft_memset(void *b, int c, size_t len);
