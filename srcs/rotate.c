@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 10:09:01 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 20:25:25 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 17:43:58 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ t_vector	rotate_vector(t_vector vector, t_objs *obj, t_env *e)
 	vector = rotate_x(vector, obj, e);
 	vector = rotate_y(vector, obj, e);
 	vector = rotate_z(vector, obj, e);
-	return (normalize_vector(vector));
+	return (vector);
 }

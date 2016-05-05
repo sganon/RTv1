@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/04 18:04:01 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/04 18:32:14 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 18:33:57 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ void		get_light(char *str, t_env *e)
 	if (!light)
 		ft_error("No light description found. Please add one", 2);
 	i = 5;
-	while (ft_isspace(str[i]))
+	while (ft_isspace(light[i]))
 		i++;
 	if (light[i] == '(')
 	{
+		i++;
 		check_format(light, i);
 		tmp = 0;
 		while (light[i] != '\n')
@@ -55,7 +56,8 @@ void		get_light(char *str, t_env *e)
 				tmp = 0;
 				i++;
 			}
-			buffer[tmp] = light[i];
+			if (tmp <= 255)
+				buffer[tmp] = light[i];
 			tmp++;
 			i++;
 		}

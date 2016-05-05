@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/04 18:31:08 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 17:46:32 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define CYL	8
 # define CON	4
 # define PLA	5
+
+# define INT_MAX	2147483647 
 
 # define ESC	53
 
@@ -100,10 +102,14 @@ typedef struct			s_env
 	double				*cos;
 	double				*sin;
 	double				*tan;
+	double				last_draw;
 	void				*img_ptr;
 	char				*img;
 	int					bpp;
 	int					sl;
+	double				a;
+	double				b;
+	double				c;
 	int					end;
 	t_cam				cam;
 	t_vector			vector;
