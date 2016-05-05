@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 18:21:38 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 18:43:12 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,13 @@ void	get_abc(t_env *e, t_objs *obj)
 		e->a = pow(e->vector.x, 2.) + pow(e->vector.z, 2.);
 		e->b = 2. * (((e->cam.x - obj->x) * e->vector.x) + ((e->cam.z - obj->z) * e->vector.z));
 		e->c = pow(e->cam.x - obj->x, 2.) + pow(e->cam.z - obj->z, 2.) - pow(obj->rayon, 2.);
+	}
+	if (obj->id == CON)
+	{
+		e->a = pow(e->vector.x, 2.) - pow(e->vector.y ,2.) + pow(e->vector.z, 2.);
+		e->b = 2. * (((e->cam.x - obj->x) * e->vector.x) - ((e->cam.y - obj->y) * e->vector.y) + ((e->cam.z - obj->z) * e->vector.z));
+		e->c = pow(e->cam.x - obj->x, 2.) - pow(e->cam.y - obj->y, 2.) +
+			pow(e->cam.z - obj->z, 2.);
 	}
 }
 
