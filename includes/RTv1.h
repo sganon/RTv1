@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 17:46:32 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 19:19:51 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);
 t_vector				vector_double(t_vector v);
 t_vector				new_vector(t_vector v1, t_vector v2);
-t_vector				rotate_vector(t_vector vector, t_objs *obj, t_env *e);
+t_vector				rotate_vector(t_vector vector, t_env *e);
 double					vector_scalar(t_vector v1, t_vector v2);
 
 # endif

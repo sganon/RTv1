@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:04:26 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 18:33:21 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 19:32:22 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	stock_cam_coord(char *str, int step, t_objs *obj)
 {
+	ft_putendl(str);
 	if (step == 0)
 		obj->x = ft_atoi(str);
 	if (step == 1)
@@ -88,6 +89,6 @@ int			get_camera(char	*str, t_objs *obj)
 	if (cam_start[i] == '(')
 		check_cam_coord(cam_start, i + 1, obj);
 	else
-		ft_error("')' expected for camera coordinate", 2);
+		ft_error("'(' expected for camera coordinate", 2);
 	return (1);
 }

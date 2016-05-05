@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 18:43:12 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 19:36:12 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	cast(t_env *e, t_objs *obj)
 			{
 				e->vector = get_vector(e->vector, x, y);
 				//e->last_draw = INT_MAX - 1; 
-				//e->vector = rotate_vector(e->vector, obj, e);
+				//e->vector = rotate_vector(e->vector, e);
 				get_intersect(obj, e, x, y);
 				y++;
 			}

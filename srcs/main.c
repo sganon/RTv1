@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:11:00 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/04 18:24:30 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/05 19:33:43 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int		expose_hook(t_env *e)
 
 t_objs	*manage_data(t_env *e, t_objs *obj)
 {
-	obj->x = e->cam.x;
-	obj->y = e->cam.y;
-	obj->z = e->cam.z;
-	obj->rx = e->cam.rx;
-	obj->ry = e->cam.ry;
-	obj->rz = e->cam.rz;
+	e->cam.x = obj->x;
+	e->cam.y = obj->y;
+	e->cam.y = obj->z;
+	e->cam.rx = obj->rx;
+	e->cam.ry = obj->ry;
+	e->cam.rz = obj->rz;
 	if (obj->next)
 		obj = obj->next;
 	return (obj);
