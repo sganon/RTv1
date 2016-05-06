@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 19:19:51 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/06 13:58:14 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,10 @@ int						get_camera(char *str, t_objs *obj);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
+void					get_intersect(t_objs *obj, t_env *e, int x, int y);
+void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
 void					get_light(char *str, t_env *e);
+void					draw_in_img(t_env *e, int x, int y, double cosi);
 t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);

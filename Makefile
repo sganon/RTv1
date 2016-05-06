@@ -6,7 +6,7 @@
 #    By: sganon <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/23 12:32:31 by sganon            #+#    #+#              #
-#    Updated: 2016/05/04 18:16:26 by sganon           ###   ########.fr        #
+#    Updated: 2016/05/06 13:40:22 by sganon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC =	main.c \
 		object_parsing2.c \
 		light_parsing.c \
 		ray_cast.c \
+		plane.c \
 		math_vector.c \
 		rotate.c \
 
