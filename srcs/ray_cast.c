@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 14:40:41 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/06 20:57:34 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	get_abc(t_env *e, t_objs *obj)
 {
 	if (obj->id == SPH)
 	{
-		e->a = e->vector.x * e->vector.x + e->vector.y * e->vector.y + e->vector.z * e->vector.z;
+		e->a = pow(e->vector.x, 2.) + pow(e->vector.y, 2.) + pow(e->vector.z, 2.);
 		e->b = 2. * (((e->cam.x - obj->x) * e->vector.x) + ((e->cam.y - obj->y) * e->vector.y) + ((e->cam.z - obj->z) * e->vector.z));
 		e->c = pow(e->cam.x - obj->x, 2.) + pow(e->cam.y - obj->y, 2.) + pow(e->cam.z - obj->z, 2.) - pow(obj->rayon, 2.);
 	}
@@ -76,40 +76,36 @@ void	get_abc(t_env *e, t_objs *obj)
 
 double	get_norme(t_objs *obj)
 {
-	if (obj->s1 > 0 && obj->s1 < obj->s2)
+	if (obj->s1 >= 0 && obj->s1 <= obj->s2)
 		return (obj->s1);
-	else if (obj->s2 > 0 && obj->s2 < obj->s1)
-		return (obj->s2);
 	else
-		return (-1.);
+		return (obj->s2);
 }
 
-int		check_for_closer_obj(t_objs *obj, t_env *e)
+int		check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e)
 {
-	t_objs *tmp;
 	double	tmp_n;
 	double	obj_n;
 	double	delta;
 
-	tmp = e->begin_list;
 	obj_n = get_norme(obj);
-	while (tmp)
+	if (!tmp)
+		return (0);
+	else
 	{
-		if (tmp->id != PLA)
-		{
-			get_abc(e, tmp);
-			delta = e->b * e->b - 4. * e->a * e->c;
-			if (delta < 0)
-				return (0);
-			tmp->s1 = (-(e->b) + sqrt(delta)) / (2. * e->a);
-			tmp->s2 = (-(e->b) - sqrt(delta)) / (2. * e->a);
-			tmp_n = get_norme(tmp);
-			if (tmp_n < obj_n)
-				return (1);
-		}
-		tmp = tmp->next;
+		get_abc(e, tmp);
+		delta = e->b * e->b - 4. * e->a * e->c;
+		if (delta < 0)
+			return (check_for_closer_obj(obj, tmp->next, e));
+		tmp->s1 = (-(e->b) + sqrt(delta)) / (2. * e->a);
+		tmp->s2 = (-(e->b) - sqrt(delta)) / (2. * e->a);
+//		if (tmp->s1 >= 0 && tmp->s2 >= 0)
+//			return (check_for_closer_obj(obj, tmp->next, e));
+		tmp_n = get_norme(tmp);
+		if (tmp_n < obj_n)
+			return (1);
 	}
-	return (0);
+	return (check_for_closer_obj(obj, tmp->next, e));
 }
 
 void	get_color(t_env *e, t_objs *obj, int x, int y)
@@ -120,7 +116,7 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	t_cam		light_inter;
 	double		cosi;
 
-	if (!check_for_closer_obj(obj, e))
+	if (!check_for_closer_obj(obj, e->begin_list, e))
 	{
 		dir = get_norme(obj);
 		light_inter.x = (e->cam.x + (e->vector.x * dir));
@@ -178,6 +174,5 @@ void	cast(t_env *e, t_objs *obj)
 			x++;
 		}
 		obj = obj->next;
-		ft_putendl("obj++");
 	}
 }

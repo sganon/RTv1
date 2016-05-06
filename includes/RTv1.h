@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 13:58:14 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/06 20:58:51 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ typedef struct			s_env
 	char				*img;
 	int					bpp;
 	int					sl;
+	int					end;
 	double				a;
 	double				b;
 	double				c;
-	int					end;
 	t_cam				cam;
 	t_vector			vector;
 	t_vector			light;

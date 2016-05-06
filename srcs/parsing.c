@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/04 18:19:06 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/06 15:13:44 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ t_objs		*parsing(char *filename, t_env *e, t_objs *obj)
 	char	*tmp;
 	int		ret;
 
-	(void)e;
 	if ((fd = open(filename, O_RDONLY)) < 3)
-		return (0);
+		ft_error("Cannot open file", 2);
 	tmp = ft_strnew(1);
 	while (42)
 	{
