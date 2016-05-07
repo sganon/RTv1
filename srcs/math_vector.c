@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:40:33 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 17:06:25 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/07 17:03:53 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,16 @@ t_vector	vector_double(t_vector v)
 	return (normalize_vector(new_vector));
 }
 
-double	vector_scalar(t_vector v1, t_vector v2)
+double	vector_scalar(t_vector vect1, t_vector vect2)
 {
-	double	scalar;
+	double		value;
+	double		x;
+	double		y;
+	double		z;
 
-	scalar = (v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z);
-	return (scalar);
+	x = vect1.x * vect2.x;
+	y = vect1.y * vect2.y;
+	z = vect1.z * vect2.z;
+	value = x + y + z;
+	return (value);
 }

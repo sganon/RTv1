@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 20:58:51 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/07 16:56:47 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ t_vector				normalize_vector(t_vector vector);
 t_vector				vector_double(t_vector v);
 t_vector				new_vector(t_vector v1, t_vector v2);
 t_vector				rotate_vector(t_vector vector, t_env *e);
-double					vector_scalar(t_vector v1, t_vector v2);
+double					vector_scalar(t_vector vect1, t_vector vect2);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 13:38:34 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 13:43:00 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/07 17:09:03 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	get_plane_color(t_env *e, t_objs *obj, int x, int y)
 	light_inter.x = (e->cam.x + (e->vector.x * dir));
 	light_inter.y = (e->cam.y + (e->vector.y * dir));
 	light_inter.z = (e->cam.z + (e->vector.z * dir));
-	vector_light.x = e->light.x - light_inter.x;
-	vector_light.y = e->light.y - light_inter.y;
-	vector_light.z = e->light.z - light_inter.z;
+	vector_light.x = light_inter.x - e->light.x;
+	vector_light.y = light_inter.y - e->light.y;
+	vector_light.z = light_inter.z - e->light.z;
 	normal.x = obj->x;
 	normal.y = obj->y;
 	normal.z = obj->z;
@@ -51,6 +51,7 @@ void	plane_intersect(t_objs *obj, t_env *e, int x, int y)
 	n.z = obj->z;
 	n_scalar_v = vector_scalar(n, v);
 	n_scalar_vector = vector_scalar(n, e->vector);
+	//printf("n.v %f\n n.vector %f\n", n_scalar_v, n_scalar_vector);
 	if (n_scalar_vector > 0)
 	{
 		obj->s1 = (n_scalar_v + 3.) / n_scalar_vector;

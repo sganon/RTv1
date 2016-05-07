@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 20:57:34 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/07 17:05:37 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ int		check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e)
 			return (check_for_closer_obj(obj, tmp->next, e));
 		tmp->s1 = (-(e->b) + sqrt(delta)) / (2. * e->a);
 		tmp->s2 = (-(e->b) - sqrt(delta)) / (2. * e->a);
-//		if (tmp->s1 >= 0 && tmp->s2 >= 0)
-//			return (check_for_closer_obj(obj, tmp->next, e));
 		tmp_n = get_norme(tmp);
 		if (tmp_n < obj_n)
 			return (1);
@@ -116,30 +114,28 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	t_cam		light_inter;
 	double		cosi;
 
-	if (!check_for_closer_obj(obj, e->begin_list, e))
-	{
-		dir = get_norme(obj);
-		light_inter.x = (e->cam.x + (e->vector.x * dir));
-		light_inter.y = (e->cam.y + (e->vector.y * dir));
-		light_inter.z = (e->cam.z + (e->vector.z * dir));
-		vector_light.x = e->light.x - light_inter.x;
-		vector_light.y = e->light.y - light_inter.y;
-		vector_light.z = e->light.z - light_inter.z;
-		normal.x = ((light_inter.x) - obj->x);
-		normal.y = ((light_inter.y) - obj->y);
-		normal.z = ((light_inter.z) - obj->z);
-		normal = normalize_vector(normal);
-		vector_light = normalize_vector(vector_light);
-		cosi = vector_scalar(normal, vector_light);
-		draw_in_img(e, x, y, cosi);
-	}
+	if (check_for_closer_obj(obj, e->begin_list, e))
+		return ;
+	dir = get_norme(obj);
+	light_inter.x = (e->cam.x + (e->vector.x * dir));
+	light_inter.y = (e->cam.y + (e->vector.y * dir));
+	light_inter.z = (e->cam.z + (e->vector.z * dir));
+	vector_light.x = e->light.x - light_inter.x;
+	vector_light.y = e->light.y - light_inter.y;
+	vector_light.z = e->light.z - light_inter.z;
+	normal.x = ((light_inter.x) - obj->x);
+	normal.y = ((light_inter.y) - obj->y);
+	normal.z = ((light_inter.z) - obj->z);
+	normal = normalize_vector(normal);
+	vector_light = normalize_vector(vector_light);
+	cosi = vector_scalar(normal, vector_light);
+	draw_in_img(e, x, y, cosi);
 }
 
 void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 {
 	double	delta;
 
-	e->vector = get_vector(e->vector, x, y);
 	get_abc(e, obj);
 	delta = e->b * e->b - 4. * e->a * e->c;
 	if (delta < 0)
@@ -161,14 +157,16 @@ void	cast(t_env *e, t_objs *obj)
 		x = 0;
 		while (x < WIN_X)
 		{
+			e->vector = get_vector(e->vector, x, y);
 			y = 0;
 			while (y < WIN_Y)
 			{
-				//e->vector = rotate_vector(e->vector, e);
 				if (obj->id != PLA)
 					get_intersect(obj, e, x, y);
 				else
+				{
 					plane_intersect(obj, e, x, y);
+				}
 				y++;
 			}
 			x++;
