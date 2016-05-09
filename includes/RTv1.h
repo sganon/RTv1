@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/07 16:56:47 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/09 18:57:36 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,13 @@ typedef struct			s_objs
 	struct s_objs 		*next;
 }						t_objs;
 
+typedef struct			s_col
+{
+	double				s1;
+	double				s2;
+	t_objs				*obj;
+}						t_col;
+
 typedef struct			s_env
 {
 	void				*mlx;
@@ -111,8 +118,10 @@ typedef struct			s_env
 	double				a;
 	double				b;
 	double				c;
+	double				delta;
 	t_cam				cam;
 	t_vector			vector;
+	t_col				col;
 	t_vector			light;
 	t_objs				*begin_list;
 }						t_env;
@@ -121,13 +130,14 @@ int						init_env(t_env *e);
 int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
 int						get_camera(char *str, t_objs *obj);
+int						check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
 void					get_intersect(t_objs *obj, t_env *e, int x, int y);
 void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
 void					get_light(char *str, t_env *e);
-void					draw_in_img(t_env *e, int x, int y, double cosi);
+void					draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj);
 t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);

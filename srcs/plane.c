@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 13:38:34 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/07 17:09:03 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/09 18:58:54 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	get_plane_color(t_env *e, t_objs *obj, int x, int y)
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
 	cosi = fabs(vector_scalar(normal, vector_light));
-	draw_in_img(e, x, y, cosi);
+	draw_in_img(e, x, y, cosi, obj);
 }
 
 void	plane_intersect(t_objs *obj, t_env *e, int x, int y)

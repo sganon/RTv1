@@ -6,14 +6,30 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/07 17:05:37 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/09 18:59:22 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RTv1.h"
 #include	<stdio.h>
 
-void	draw_in_img(t_env *e, int x, int y, double cosi)
+int		define_obj_color(t_objs *obj)
+{
+	if (obj->color == 0)
+		return (0xFFFFFF);
+	if (obj->color == 1)
+		return (0xFF0000);
+	if (obj->color == 2)
+		return (0x00FF00);
+	if (obj->color == 3)
+		return (0x0000FF);
+	if (obj->color == 4)
+		return (0xFFFF00);
+	else
+		return (0x9E9E9E);
+}
+
+void	draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj)
 {
 	int		p;
 	t_color	u;
@@ -22,7 +38,7 @@ void	draw_in_img(t_env *e, int x, int y, double cosi)
 	k = 2;
 	if (cosi <= 0)
 		cosi = 0;
-	u.color = 0x00FF00;
+	u.color = define_obj_color(obj);
 	if (x < WIN_X && y < WIN_Y)
 	{
 		p = x * e->bpp / 8 + y * e->sl;
@@ -129,7 +145,7 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
 	cosi = vector_scalar(normal, vector_light);
-	draw_in_img(e, x, y, cosi);
+	draw_in_img(e, x, y, cosi, obj);
 }
 
 void	get_intersect(t_objs *obj, t_env *e, int x, int y)
@@ -153,14 +169,13 @@ void	cast(t_env *e, t_objs *obj)
 
 	while (obj)
 	{
-		printf("id: %d\n", obj->id);
 		x = 0;
 		while (x < WIN_X)
 		{
-			e->vector = get_vector(e->vector, x, y);
 			y = 0;
 			while (y < WIN_Y)
 			{
+				e->vector = get_vector(e->vector, x, y);
 				if (obj->id != PLA)
 					get_intersect(obj, e, x, y);
 				else

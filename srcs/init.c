@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:15:17 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/03 12:34:38 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/09 16:39:45 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int		init_env(t_env *e)
 		return (0);
 	e->win = mlx_new_window(e->mlx, WIN_X, WIN_Y, "RTv1");
 	e->img_ptr = NULL;
+	e->col.s1 = INT_MAX - 1;
+	e->col.s2 = INT_MAX - 1;
+	e->col.obj = NULL;
 	if (!init_trigo(e))
 		return (0);
 	return (1);
