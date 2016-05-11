@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/09 18:57:36 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/11 15:45:52 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,12 @@ int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
 int						get_camera(char *str, t_objs *obj);
 int						check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e);
+int						get_intersect(t_objs *obj, t_env *e, int x, int y);
+void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
+void					get_plane_color(t_env *e, t_objs *obj, int x, int y);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
-void					get_intersect(t_objs *obj, t_env *e, int x, int y);
-void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
 void					get_light(char *str, t_env *e);
 void					draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj);
 t_objs					*get_obj(char *str, t_objs *obj);
@@ -144,6 +145,7 @@ t_vector				normalize_vector(t_vector vector);
 t_vector				vector_double(t_vector v);
 t_vector				new_vector(t_vector v1, t_vector v2);
 t_vector				rotate_vector(t_vector vector, t_env *e);
+t_cam					rotate_cam(t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
 
 # endif

@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/29 16:04:26 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/05 19:32:22 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/10 17:41:40 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	stock_cam_coord(char *str, int step, t_objs *obj)
 {
-	ft_putendl(str);
 	if (step == 0)
 		obj->x = ft_atoi(str);
 	if (step == 1)

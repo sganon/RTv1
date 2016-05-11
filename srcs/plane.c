@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/06 13:38:34 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/09 18:58:54 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/11 15:49:10 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	get_plane_color(t_env *e, t_objs *obj, int x, int y)
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
 	cosi = fabs(vector_scalar(normal, vector_light));
+	e->vector = vector_light;
 	draw_in_img(e, x, y, cosi, obj);
 }
 
@@ -43,6 +44,8 @@ void	plane_intersect(t_objs *obj, t_env *e, int x, int y)
 	double		n_scalar_v;
 	double		n_scalar_vector;
 
+	(void)x;
+	(void)y;
 	v.x = e->cam.x;
 	v.y = e->cam.y;
 	v.z = e->cam.z;
@@ -51,13 +54,14 @@ void	plane_intersect(t_objs *obj, t_env *e, int x, int y)
 	n.z = obj->z;
 	n_scalar_v = vector_scalar(n, v);
 	n_scalar_vector = vector_scalar(n, e->vector);
-	//printf("n.v %f\n n.vector %f\n", n_scalar_v, n_scalar_vector);
 	if (n_scalar_vector > 0)
 	{
 		obj->s1 = (n_scalar_v + 3.) / n_scalar_vector;
 		obj->s2 = INT_MAX;
-		get_plane_color(e, obj, x, y);
 	}
 	else
-		return ;
+	{
+		obj->s1 = INT_MAX;
+		obj->s2 = INT_MAX;
+	}
 }

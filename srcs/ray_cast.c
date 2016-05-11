@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/09 18:59:22 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/11 15:52:03 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void	get_abc(t_env *e, t_objs *obj)
 		e->c = pow(e->cam.x - obj->x, 2.) - pow(e->cam.y - obj->y, 2.) +
 			pow(e->cam.z - obj->z, 2.);
 	}
+	if (obj->id != PLA)
+		e->delta = e->b * e->b - 4. * e->a * e->c;
+	else
+		e->delta = 0;
 }
 
 double	get_norme(t_objs *obj)
@@ -98,29 +102,6 @@ double	get_norme(t_objs *obj)
 		return (obj->s2);
 }
 
-int		check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e)
-{
-	double	tmp_n;
-	double	obj_n;
-	double	delta;
-
-	obj_n = get_norme(obj);
-	if (!tmp)
-		return (0);
-	else
-	{
-		get_abc(e, tmp);
-		delta = e->b * e->b - 4. * e->a * e->c;
-		if (delta < 0)
-			return (check_for_closer_obj(obj, tmp->next, e));
-		tmp->s1 = (-(e->b) + sqrt(delta)) / (2. * e->a);
-		tmp->s2 = (-(e->b) - sqrt(delta)) / (2. * e->a);
-		tmp_n = get_norme(tmp);
-		if (tmp_n < obj_n)
-			return (1);
-	}
-	return (check_for_closer_obj(obj, tmp->next, e));
-}
 
 void	get_color(t_env *e, t_objs *obj, int x, int y)
 {
@@ -130,8 +111,11 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	t_cam		light_inter;
 	double		cosi;
 
-	if (check_for_closer_obj(obj, e->begin_list, e))
-		return ;
+	if (obj->id == PLA)
+	{
+		get_plane_color(e, obj, x, y);
+		return;
+	}
 	dir = get_norme(obj);
 	light_inter.x = (e->cam.x + (e->vector.x * dir));
 	light_inter.y = (e->cam.y + (e->vector.y * dir));
@@ -145,21 +129,47 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
 	cosi = vector_scalar(normal, vector_light);
+	e->vector = vector_light;
+//	if (!get_intersect(e->begin_list, e, x, y))
 	draw_in_img(e, x, y, cosi, obj);
 }
 
-void	get_intersect(t_objs *obj, t_env *e, int x, int y)
+int		get_intersect(t_objs *obj, t_env *e, int x, int y)
 {
-	double	delta;
 
-	get_abc(e, obj);
-	delta = e->b * e->b - 4. * e->a * e->c;
-	if (delta < 0)
-		return ;
-	obj->s1 = (-(e->b) + sqrt(delta)) / (2. * e->a);
-	obj->s2 = (-(e->b) - sqrt(delta)) / (2. * e->a);
-	if (obj->s1 >= 0 || obj->s2 >= 0)
-		get_color(e, obj, x, y);
+	t_objs	*closest;
+	double	s;
+
+	closest = NULL;
+	s = INT_MAX;
+	while (obj)
+	{
+		get_abc(e, obj);
+		if (e->delta >= 0)
+		{
+			if (obj->id == PLA)
+			{
+				plane_intersect(obj, e, x, y);
+			}
+			else
+			{
+				obj->s1 = (-(e->b) + sqrt(e->delta)) / (2. * e->a);
+				obj->s2 = (-(e->b) - sqrt(e->delta)) / (2. * e->a);
+			}
+			if ((obj->s1 >= 0 && obj->s1 < s) || (obj->s2 >= 0 && obj->s2 < s))
+			{
+				s = get_norme(obj);
+				closest = obj;
+			}
+		}
+		obj = obj->next;
+	}
+	if (closest)
+	{
+		get_color(e, closest, x, y);
+		return (1);
+	}
+	return (0);
 }
 
 void	cast(t_env *e, t_objs *obj)
@@ -167,25 +177,16 @@ void	cast(t_env *e, t_objs *obj)
 	int	y;
 	int	x;
 
-	while (obj)
+	y = 0;
+	while (y < WIN_Y)
 	{
 		x = 0;
 		while (x < WIN_X)
 		{
-			y = 0;
-			while (y < WIN_Y)
-			{
-				e->vector = get_vector(e->vector, x, y);
-				if (obj->id != PLA)
-					get_intersect(obj, e, x, y);
-				else
-				{
-					plane_intersect(obj, e, x, y);
-				}
-				y++;
-			}
+			e->vector = get_vector(e->vector, x, y);
+			get_intersect(obj, e, x, y);
 			x++;
 		}
-		obj = obj->next;
+		y++;
 	}
 }
