@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/11 15:52:03 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/11 18:38:55 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,10 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	vector_light = normalize_vector(vector_light);
 	cosi = vector_scalar(normal, vector_light);
 	e->vector = vector_light;
-//	if (!get_intersect(e->begin_list, e, x, y))
 	draw_in_img(e, x, y, cosi, obj);
 }
 
-int		get_intersect(t_objs *obj, t_env *e, int x, int y)
+void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 {
 
 	t_objs	*closest;
@@ -165,11 +164,7 @@ int		get_intersect(t_objs *obj, t_env *e, int x, int y)
 		obj = obj->next;
 	}
 	if (closest)
-	{
 		get_color(e, closest, x, y);
-		return (1);
-	}
-	return (0);
 }
 
 void	cast(t_env *e, t_objs *obj)

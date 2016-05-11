@@ -6,7 +6,7 @@
 #    By: sganon <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/23 12:32:31 by sganon            #+#    #+#              #
-#    Updated: 2016/05/11 15:52:48 by sganon           ###   ########.fr        #
+#    Updated: 2016/05/11 17:12:44 by sganon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC =	main.c \
 		math_vector.c \
 		rotate.c \
 		rotate_cam.c \
+		shadow.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

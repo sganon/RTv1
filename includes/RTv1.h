@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:12:14 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/11 15:45:52 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/11 17:14:53 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,10 @@ int						create_image(t_env *e);
 int						key_events(int key, t_env *e);
 int						get_camera(char *str, t_objs *obj);
 int						check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e);
-int						get_intersect(t_objs *obj, t_env *e, int x, int y);
+int						shadow(t_objs *obj, t_env *e, int x, int y);
+void					get_intersect(t_objs *obj, t_env *e, int x, int y);
 void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
+void					get_abc(t_env *e, t_objs *obj);
 void					get_plane_color(t_env *e, t_objs *obj, int x, int y);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
@@ -147,5 +149,6 @@ t_vector				new_vector(t_vector v1, t_vector v2);
 t_vector				rotate_vector(t_vector vector, t_env *e);
 t_cam					rotate_cam(t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
+double					get_norme(t_objs *obj);
 
 # endif
