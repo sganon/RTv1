@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 11:15:53 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/04 18:29:21 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/12 17:40:07 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ typedef struct		s_list
 
 double				ft_atof(char *s);
 int					get_next_line(int const fd, char **line);
+int					re_lecture(const int fd, char **line, char **str, int ret);
+int					re_lecture2(char *buff, char **line, char **str);
+int					lecture(char **str, char **line);
+char				*ft_strjoinfree(char *s1, char *s2, int	mode);
 int					ft_nllen(char *str);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);

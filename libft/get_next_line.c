@@ -3,67 +3,112 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: dbourdon <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/06 12:13:35 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/12 16:24:16 by sganon           ###   ########.fr       */
+/*   Created: 2016/02/06 13:33:17 by dbourdon          #+#    #+#             */
+/*   Updated: 2016/05/12 17:40:40 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-static char		*read_til_n(int const fd, char *ret)
+char	*ft_strjoinfree(char *s1, char *s2, int mode)
 {
-	int			i;
-	int			j;
-	char		buf[BUFF_SIZE + 1];
+	char *tmp;
 
-	i = 0;
-	while ((i = read(fd, buf, BUFF_SIZE)) > 0)
+	tmp = ft_strjoin(s1, s2);
+	if (mode == 1)
+		free(s1);
+	else if (mode == 2)
+		free(s2);
+	else
 	{
-		j = 0;
-		buf[i] = 0;
-		if (ret)
-			ret = ft_strjoin(ret, buf);
-		else
-			ret = ft_strdup(buf);
-		while (buf[j])
-		{
-			if (buf[j] == '\n')
-				return (ret);
-			j++;
-		}
+		free(s1);
+		free(s2);
 	}
-	if (i == -1)
-		return (NULL);
-	return (ret);
+	return (tmp);
 }
 
-int				get_next_line(int const fd, char **line)
+int		lecture(char **str, char **line)
 {
-	static char	*reste = NULL;
-	char		*buf;
-	int			i;
+	char	*tmp;
+	char	*tmp2;
 
-	i = 0;
-	buf = NULL;
-	if (!reste)
-		reste = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1));
-	if (fd < 0 || fd == 1 || !line || !(buf = read_til_n(fd, reste)))
-		return (-1);
-	while (buf[i] && buf[i] != '\n')
-		i++;
-	if (i > 0)
-		reste = ft_strsub(buf, (i + 1), ft_strlen(buf));
-	else if (i == 0 && buf[i] == '\n')
+	tmp = ft_strchr(*str, '\n');
+	free(*line);
+	*line = ft_strsub(*str, 0, tmp - *str);
+	tmp2 = ft_strdup(tmp + 1);
+	free(*str);
+	*str = tmp2;
+	return (1);
+}
+
+int		re_lecture2(char *buff, char **line, char **str)
+{
+	char	*tmp;
+	char	*stock;
+
+	tmp = ft_strchr(buff, '\n');
+	stock = ft_strsub(buff, 0, tmp - buff);
+	*line = ft_strjoinfree(*line, stock, 0);
+	free(*str);
+	*str = ft_strdup(tmp + 1);
+	free(buff);
+	return (1);
+}
+
+int		re_lecture(const int fd, char **line, char **str, int ret)
+{
+	char	*tmp2;
+	char	*buff;
+	int		count;
+
+	count = 0;
+	if (*str != '\0')
+		*line = ft_strjoinfree(*str, *line, 2);
+	buff = ft_strnew(BUFF_SIZE + 1);
+	while ((ret = read(fd, buff, BUFF_SIZE)) > 0)
 	{
-		reste = ft_strsub(buf, 0, ft_strlen(buf));
-		reste++;
+		count = 1;
+		buff[ret] = '\0';
+		if ((tmp2 = ft_strchr(buff, '\n')) != NULL)
+			return (re_lecture2(buff, line, str));
+		*line = ft_strjoinfree(*line, buff, 1);
 	}
-	else
-		reste = NULL;
-	*line = ft_strsub(buf, 0, i);
-	if (i > 0 || (buf[i] == '\n' && i == 0))
-		return (1);
-	return (0);
+	if (ft_strlen(*line) > 0 && count == 0 && ret != -1)
+	{
+		*str = ft_strjoin(*line, "\n");
+		return (lecture(str, line));
+	}
+	free(buff);
+	if (ret == -1)
+		return (-1);
+	return ((count == 0) ? 0 : 1);
+}
+
+int		get_next_line(const int fd, char **line)
+{
+	static	t_list	*str;
+	int				ret;
+	t_list			*tmp;
+	t_list			*new;
+
+	tmp = str;
+	ret = 0;
+	if (fd < 0 || !line)
+		return (-1);
+	*line = ft_strnew(1);
+	while (tmp != NULL && tmp->next != NULL && tmp->content_size != (size_t)fd)
+		tmp = tmp->next;
+	if (tmp == NULL || (tmp->content_size != (size_t)fd && tmp->next == NULL))
+	{
+		new = (t_list*)malloc(sizeof(t_list));
+		new->content_size = (size_t)fd;
+		new->content = ft_strnew(1);
+		ft_lstadd(&(str), new);
+		tmp = str;
+	}
+	if ((ft_strchr(tmp->content, '\n')) != NULL)
+		return (lecture((char**)(&(tmp->content)), line));
+	return (re_lecture(fd, line, (char**)(&(tmp->content)), ret));
 }
