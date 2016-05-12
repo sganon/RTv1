@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/10 12:24:27 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/10 12:47:01 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/12 14:54:22 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cam		rotate_cam_z(t_env *e)
 	double	old_y;
 	double	rot;
 
-	rot = e->cam.rx * 10000.0;
+	rot = e->cam.rx * 100.0;
 	rot = rot >= 36000.0 ? rot - 36000.0 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_y = e->cam.y;
@@ -34,7 +34,7 @@ t_cam		rotate_cam_y(t_env *e)
 	double	old_z;
 	double	rot;
 
-	rot = e->cam.ry * 10000.0;
+	rot = e->cam.ry * 100.0;
 	rot = rot >= 36000 ? rot - 36000 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_x = e->cam.x;
@@ -50,7 +50,7 @@ t_cam		rotate_cam_x(t_env *e)
 	double	old_z;
 	double	rot;
 
-	rot = e->cam.rx * 10000.0;
+	rot = e->cam.rx * 100.0;
 	rot = rot >= 36000.0 ? rot - 36000.0 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_y = e->cam.y;

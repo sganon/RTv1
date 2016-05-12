@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/11 18:38:55 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/12 16:39:52 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	cast(t_env *e, t_objs *obj)
 		while (x < WIN_X)
 		{
 			e->vector = get_vector(e->vector, x, y);
+			e->vector = rotate_vector(e->vector, e);
 			get_intersect(obj, e, x, y);
 			x++;
 		}

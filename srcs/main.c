@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/18 18:11:00 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/11 17:11:40 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/12 16:20:10 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_objs	*manage_data(t_env *e, t_objs *obj)
 	e->cam.rx = obj->rx;
 	e->cam.ry = obj->ry;
 	e->cam.rz = obj->rz;
-	e->cam = rotate_cam(e);	
 	if (obj->next)
 		obj = obj->next;
 	return (obj);

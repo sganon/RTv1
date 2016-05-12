@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 15:48:24 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 15:13:44 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/12 16:06:39 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_objs		*get_data(char *str, t_objs *obj, t_env *e)
 	if (!(obj = get_obj(str, obj)))
 		ft_error("No object description found. Please add one", 2);
 	get_light(str, e);
+	free(str);
 	return (obj);
 }
 
@@ -41,6 +42,7 @@ t_objs		*parsing(char *filename, t_env *e, t_objs *obj)
 			break ;
 		tmp = ft_strjoin(tmp, str);
 		tmp = ft_strjoin(tmp, "\n");
+		free(str);
 	}
 	if (ret == -1)
 		return (0);

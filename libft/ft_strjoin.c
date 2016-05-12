@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: nhuber <nhuber@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/28 13:29:19 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/06 15:02:09 by sganon           ###   ########.fr       */
+/*   Created: 2016/02/26 09:54:19 by nhuber            #+#    #+#             */
+/*   Updated: 2016/05/12 16:18:23 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,23 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*dest;
-	char	*dest2;
+	char	*str;
+	size_t	len1;
+	size_t	len2;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
-	dest = (char *)malloc(sizeof(char) * (ft_strlen(s1)
-				+ ft_strlen(s2)) + 1);
-	if (dest == NULL)
+	if (s1 == NULL)
+		len1 = 0;
+	else
+		len1 = ft_strlen(s1);
+	if (s2 == NULL)
+		len2 = 0;
+	else
+		len2 = ft_strlen(s2);
+	if ((str = ft_strnew(len1 + ft_strlen(s2) + 1)) == NULL)
 		return (NULL);
-	dest2 = dest;
-	while (*s1)
-		*dest2++ = *s1++;
-	while (*s2)
-		*dest2++ = *s2++;
-	*dest2 = 0;
-	return (dest);
+	(len1 == 0) ? str : ft_strcpy(str, s1);
+	(len2 == 0) ? str : ft_strcpy((str + len1), s2);
+	return (str);
 }

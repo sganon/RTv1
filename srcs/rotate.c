@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/03 10:09:01 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/10 12:28:30 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/12 16:34:57 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_vector	rotate_z(t_vector vector, t_env *e)
 	double	old_y;
 	double	rot;
 
-	rot = e->cam.rx * 10000.0;
+	rot = e->cam.rz * 100.0;
 	rot = rot >= 36000.0 ? rot - 36000.0 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_y = vector.y;
@@ -34,7 +34,7 @@ t_vector	rotate_y(t_vector vector, t_env *e)
 	double	old_z;
 	double	rot;
 
-	rot = e->cam.ry * 10000.0;
+	rot = e->cam.ry * 100.0;
 	rot = rot >= 36000.0 ? rot - 36000.0 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_x = vector.x;
@@ -50,7 +50,7 @@ t_vector	rotate_x(t_vector vector, t_env *e)
 	double	old_z;
 	double	rot;
 
-	rot = e->cam.rx * 10000.0;
+	rot = e->cam.rx * 100.0;
 	rot = rot >= 36000.0 ? rot - 36000.0 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_y = vector.y;
