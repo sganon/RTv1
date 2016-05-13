@@ -12,6 +12,15 @@
 
 #include "RTv1.h"
 
+t_vector	cam_object_vector(t_cam cam, t_objs *obj)
+{
+	t_vector	new_vector;
+	new_vector.x = cam.x - obj->x;
+	new_vector.y = cam.y - obj->y;
+	new_vector.z = cam.z - obj->z;
+	return (new_vector);
+}
+
 t_vector	new_vector(t_vector v1, t_vector v2)
 {
 	t_vector	new_vector;	

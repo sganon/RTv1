@@ -24,6 +24,7 @@ SRC =	main.c \
 		plane.c \
 		math_vector.c \
 		rotate.c \
+		rotate_object.c \
 		rotate_cam.c \
 		shadow.c \
 

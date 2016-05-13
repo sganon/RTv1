@@ -22,7 +22,7 @@ void	print_list(t_objs *obj, t_env *e)
 	while (obj)
 	{
 		printf("~~~~~~~~~~~~~~~~~\n");
-		printf(" id: %d\n pos_x: %f\n pos_y: %f\n pos_z: %f\n", obj->id, obj->x, obj->y, obj->z);
+		printf(" id: %d\n pos_x: %f\n pos_y: %f\n pos_z: %f rx: %f ry: %f rz: %f\n", obj->id, obj->x, obj->y, obj->z, obj->rx, obj->ry, obj->rz);
 		if (obj->id == 6)
 			printf(" rayon: %d\n", obj->rayon);
 		printf("color: %d\n", obj->color);

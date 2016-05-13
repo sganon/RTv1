@@ -69,24 +69,29 @@ t_vector	get_vector(t_vector vector, int x, int y)
 
 void	get_abc(t_env *e, t_objs *obj)
 {
+	t_vector	v;
+
+	v = cam_object_vector(e->cam, obj);
+	v = rotate_obj(v, e, obj);
+	//printf("v.x: %f v.y: %f v.z: %f\n", v.x, v.y, v.z);
 	if (obj->id == SPH)
 	{
 		e->a = pow(e->vector.x, 2.) + pow(e->vector.y, 2.) + pow(e->vector.z, 2.);
-		e->b = 2. * (((e->cam.x - obj->x) * e->vector.x) + ((e->cam.y - obj->y) * e->vector.y) + ((e->cam.z - obj->z) * e->vector.z));
-		e->c = pow(e->cam.x - obj->x, 2.) + pow(e->cam.y - obj->y, 2.) + pow(e->cam.z - obj->z, 2.) - pow(obj->rayon, 2.);
+		e->b = 2. * ((v.x * e->vector.x) + (v.y * e->vector.y) + (v.z * e->vector.z));
+		e->c = pow(v.x, 2.) + pow(v.y, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
 	}
 	if (obj->id == CYL)
 	{
 		e->a = pow(e->vector.x, 2.) + pow(e->vector.z, 2.);
-		e->b = 2. * (((e->cam.x - obj->x) * e->vector.x) + ((e->cam.z - obj->z) * e->vector.z));
-		e->c = pow(e->cam.x - obj->x, 2.) + pow(e->cam.z - obj->z, 2.) - pow(obj->rayon, 2.);
+		e->b = 2. * ((v.x * e->vector.x) + (v.z * e->vector.z));
+		e->c = pow(v.x, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
 	}
 	if (obj->id == CON)
 	{
 		e->a = pow(e->vector.x, 2.) - pow(e->vector.y ,2.) + pow(e->vector.z, 2.);
-		e->b = 2. * (((e->cam.x - obj->x) * e->vector.x) - ((e->cam.y - obj->y) * e->vector.y) + ((e->cam.z - obj->z) * e->vector.z));
-		e->c = pow(e->cam.x - obj->x, 2.) - pow(e->cam.y - obj->y, 2.) +
-			pow(e->cam.z - obj->z, 2.);
+		e->b = 2. * ((v.x * e->vector.x) - (v.y * e->vector.y) + (v.z * e->vector.z));
+		e->c = pow(v.x, 2.) - pow(v.y, 2.) +
+			pow(v.z, 2.);
 	}
 	if (obj->id != PLA)
 		e->delta = e->b * e->b - 4. * e->a * e->c;

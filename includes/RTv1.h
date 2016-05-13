@@ -16,8 +16,8 @@
 # include "../mlx/mlx.h"
 # include <math.h>
 
-# define WIN_X	1000
-# define WIN_Y	1000
+# define WIN_X	900
+# define WIN_Y	900
 # define FOV	66
 
 # define SPH	6
@@ -146,6 +146,8 @@ t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);
 t_vector				vector_double(t_vector v);
 t_vector				new_vector(t_vector v1, t_vector v2);
+t_vector				cam_object_vector(t_cam cam, t_objs *obj);
+t_vector				rotate_obj(t_vector vector, t_env *e, t_objs *obj);
 t_vector				rotate_vector(t_vector vector, t_env *e);
 t_cam					rotate_cam(t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
