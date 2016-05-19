@@ -12,14 +12,14 @@
 
 #include "RTv1.h"
 
-void		stock_light_coord(char *str, t_env *e, int step)
+void		stock_light_coord(char *str, t_light *light, int step)
 {
 	if (step == 0)
-		e->light->x = ft_atoi(str);
+		light->x = ft_atoi(str);
 	if (step == 1)
-		e->light->y = ft_atoi(str);
+		light->y = ft_atoi(str);
 	if (step == 2)
-		e->light->z = ft_atoi(str);
+		light->z = ft_atoi(str);
 	if (step > 2)
 		ft_error("Too much coordinate for light: expected 3", 2);
 }
@@ -53,7 +53,7 @@ void		get_light_coord(char *str, t_env *e)
 		{
 			if(str[i] == ',' || str[i] == ')')
 			{
-				stock_light_coord(buffer, e, step);
+				stock_light_coord(buffer, e->light, step);
 				ft_bzero(buffer, 256);
 				if (str[i] == ')')
 					break;
@@ -73,10 +73,6 @@ void		get_light_coord(char *str, t_env *e)
 
 void		get_light(char *str, t_env *e)
 {
-	t_light	*light_begin;
-
-	e->light = (t_light *)malloc(sizeof(t_light *));
-	light_begin = e->light;
 	if (!(str = find_first_light(str)))
 		ft_error("No light description found. Please add at least one", 2);
 	get_light_coord(str, e);
@@ -90,5 +86,5 @@ void		get_light(char *str, t_env *e)
 		str = ft_trim(str);
 	}
 	e->light->next = NULL;
-	e->light = light_begin; 
+	e->light = e->begin_light; 
 }

@@ -52,6 +52,8 @@ int		init_env(t_env *e)
 	e->col.s1 = INT_MAX - 1;
 	e->col.s2 = INT_MAX - 1;
 	e->col.obj = NULL;
+	e->light = (t_light *)malloc(sizeof(t_light *));
+	e->begin_light = e->light;
 	if (!init_trigo(e))
 		return (0);
 	return (1);

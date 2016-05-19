@@ -131,6 +131,7 @@ typedef struct			s_env
 	t_vector			vector;
 	t_col				col;
 	t_light				*light;
+	t_light				*begin_light;
 	t_objs				*begin_list;
 }						t_env;
 

@@ -38,13 +38,15 @@ void	draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj)
 	k = 2;
 	if (cosi <= 0)
 		cosi = 0;
+	if (cosi >= 1)
+		cosi = 1;
 	u.color = define_obj_color(obj);
 	if (x < WIN_X && y < WIN_Y)
 	{
 		p = x * e->bpp / 8 + y * e->sl;
-		e->img[p] = u.rgb.r * (cosi);
-		e->img[p + 1] = u.rgb.g * (cosi);
-		e->img[p + 2] = u.rgb.b * (cosi);
+		e->img[p] = (t_bytes)u.rgb.r * (cosi);
+		e->img[p + 1] = (t_bytes)u.rgb.g * (cosi);
+		e->img[p + 2] = (t_bytes)u.rgb.b * (cosi);
 	}
 }
 
@@ -115,7 +117,6 @@ double	get_norme(t_objs *obj)
 
 void	get_color(t_env *e, t_objs *obj, int x, int y)
 {
-	t_light		*begin_light;
 	t_vector	vector_light;
 	t_vector	normal;
 	t_cam		light_inter;
@@ -126,8 +127,8 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 		get_plane_color(e, obj, x, y);
 		return;
 	}
-	begin_light = e->light;
 	cosi = 0;
+	e->light = e->begin_light;
 	while(e->light)
 	{
 		light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
@@ -145,7 +146,6 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 		e->light = e->light->next;
 	}
 	draw_in_img(e, x, y, cosi, obj);
-	e->light = begin_light;
 }
 
 void	get_intersect(t_objs *obj, t_env *e, int x, int y)
