@@ -121,6 +121,7 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 	t_vector	normal;
 	t_cam		light_inter;
 	double		cosi;
+	int			i;
 
 	if (obj->id == PLA)
 	{
@@ -128,6 +129,7 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 		return;
 	}
 	cosi = 0;
+	i = 1;
 	e->light = e->begin_light;
 	while(e->light)
 	{
@@ -142,7 +144,8 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 		normal.z = ((light_inter.z) - obj->z);
 		normal = normalize_vector(normal);
 		vector_light = normalize_vector(vector_light);
-		cosi = vector_scalar(normal, vector_light) > cosi ? vector_scalar(normal, vector_light) : cosi;
+		cosi = vector_scalar(normal, vector_light) / i > cosi ? vector_scalar(normal, vector_light) / i : cosi;
+		i++;
 		e->light = e->light->next;
 	}
 	draw_in_img(e, x, y, cosi, obj);

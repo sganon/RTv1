@@ -104,6 +104,8 @@ char		*ft_trim(char *str)
 	int	i;
 
 	i = 0;
+	if(!str)
+		return (str);
 	while (str[i] != '\n')
 		i++;
 	new = ft_strsub(str, i, ft_strlen(str));

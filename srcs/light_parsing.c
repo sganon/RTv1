@@ -73,15 +73,14 @@ void		get_light_coord(char *str, t_env *e)
 
 void		get_light(char *str, t_env *e)
 {
-	if (!(str = find_first_light(str)))
+	if (!(str = ft_strstr(str, "light")))
 		ft_error("No light description found. Please add at least one", 2);
 	get_light_coord(str, e);
 	str = ft_trim(str);
 	while((str = ft_strstr(str, "light")) != NULL)
 	{
-		e->light->next = (t_light *)malloc(sizeof(t_light *));
+		e->light->next = (t_light *)malloc(sizeof(t_light));
 		e->light = e->light->next;
-		ft_putendl(str);
 		get_light_coord(str, e);
 		str = ft_trim(str);
 	}
