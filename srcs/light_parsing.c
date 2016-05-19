@@ -12,54 +12,83 @@
 
 #include "RTv1.h"
 
-void		stock_light_coord(char *str, t_env *e)
+void		stock_light_coord(char *str, t_env *e, int step)
 {
-	static int	step = 0;
-
 	if (step == 0)
-		e->light.x = ft_atoi(str);
+		e->light->x = ft_atoi(str);
 	if (step == 1)
-		e->light.y = ft_atoi(str);
+		e->light->y = ft_atoi(str);
 	if (step == 2)
-		e->light.z = ft_atoi(str);
+		e->light->z = ft_atoi(str);
 	if (step > 2)
 		ft_error("Too much coordinate for light: expected 3", 2);
-	step++;
 }
 
-void		get_light(char *str, t_env *e)
+char 		*find_first_light(char *str)
 {
-	char	*light;
+	str = ft_strstr(str, "light");
+	if (!str)
+		return (NULL);
+	else
+		return (str);
+}
+
+void		get_light_coord(char *str, t_env *e)
+{
 	int		i;
+	int		step;
 	char	buffer[256];
 	int		tmp;
 
-	light = ft_strstr(str, "light");
-	if (!light)
-		ft_error("No light description found. Please add one", 2);
 	i = 5;
-	while (ft_isspace(light[i]))
+	while(ft_isspace(str[i]))
 		i++;
-	if (light[i] == '(')
+	if (str[i] == '(')
 	{
 		i++;
-		check_format(light, i);
+		check_format(str, i);
 		tmp = 0;
-		while (light[i] != '\n')
+		step = 0;
+		while(str[i] != '\n')
 		{
-			if (light[i] == ',' || light[i] == ')')
+			if(str[i] == ',' || str[i] == ')')
 			{
-				stock_light_coord(buffer, e);
+				stock_light_coord(buffer, e, step);
 				ft_bzero(buffer, 256);
-				if (light[i] == ')')
+				if (str[i] == ')')
 					break;
 				tmp = 0;
 				i++;
-			}
+				step++;
+			}			
 			if (tmp <= 255)
-				buffer[tmp] = light[i];
+				buffer[tmp] = str[i];
 			tmp++;
 			i++;
 		}
 	}
+	else
+		ft_error("'(' expected for light coordinate", 2);
+}
+
+void		get_light(char *str, t_env *e)
+{
+	t_light	*light_begin;
+
+	e->light = (t_light *)malloc(sizeof(t_light *));
+	light_begin = e->light;
+	if (!(str = find_first_light(str)))
+		ft_error("No light description found. Please add at least one", 2);
+	get_light_coord(str, e);
+	str = ft_trim(str);
+	while((str = ft_strstr(str, "light")) != NULL)
+	{
+		e->light->next = (t_light *)malloc(sizeof(t_light *));
+		e->light = e->light->next;
+		ft_putendl(str);
+		get_light_coord(str, e);
+		str = ft_trim(str);
+	}
+	e->light->next = NULL;
+	e->light = light_begin; 
 }

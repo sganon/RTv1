@@ -16,6 +16,9 @@
 
 void	print_list(t_objs *obj, t_env *e)
 {
+	t_light	*tmp_light;
+
+	tmp_light = e->light;
 	printf("Camera(%f, %f, %f)\n", e->cam.x, e->cam.y, e->cam.z);
 	printf("~~~~~~~~~~~~~~~~~\n");
 	printf("Camera_rotate(%f, %f, %f)\n", e->cam.rx, e->cam.ry, e->cam.rz);
@@ -28,8 +31,12 @@ void	print_list(t_objs *obj, t_env *e)
 		printf("color: %d\n", obj->color);
 		obj = obj->next;
 	}
-	printf("~~~~~~~~~~~~~~~~~\n");
-	printf("Light(%f, %f, %f)\n", e->light.x, e->light.y, e->light.z);
+	while(tmp_light)
+	{
+		printf("~~~~~~~~~~~~~~~~~\n");
+		printf("Light(%f, %f, %f)\n", tmp_light->x, tmp_light->y, tmp_light->z);
+		tmp_light = tmp_light->next;
+	}
 }
 
 int		expose_hook(t_env *e)
@@ -37,7 +44,6 @@ int		expose_hook(t_env *e)
 	if (!e->img_ptr)
 		create_image(e);
 	cast(e, e->begin_list);
-	mlx_put_image_to_window(e->mlx, e->win, e->img_ptr, 0, 0);
 	mlx_do_sync(e->mlx);
 	return (1);
 }

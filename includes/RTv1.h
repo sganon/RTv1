@@ -102,6 +102,14 @@ typedef struct			s_col
 	t_objs				*obj;
 }						t_col;
 
+typedef struct 			s_light
+{
+	double				x;
+	double				y;
+	double				z;
+	struct s_light		*next;
+}						t_light;
+
 typedef struct			s_env
 {
 	void				*mlx;
@@ -122,7 +130,7 @@ typedef struct			s_env
 	t_cam				cam;
 	t_vector			vector;
 	t_col				col;
-	t_vector			light;
+	t_light				*light;
 	t_objs				*begin_list;
 }						t_env;
 
@@ -132,6 +140,7 @@ int						key_events(int key, t_env *e);
 int						get_camera(char *str, t_objs *obj);
 int						check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e);
 int						shadow(t_objs *obj, t_env *e, int x, int y);
+char					*ft_trim(char *str);
 void					get_intersect(t_objs *obj, t_env *e, int x, int y);
 void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
 void					get_abc(t_env *e, t_objs *obj);
@@ -139,8 +148,8 @@ void					get_plane_color(t_env *e, t_objs *obj, int x, int y);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
-void					get_light(char *str, t_env *e);
 void					draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj);
+void					get_light(char *str, t_env *e);
 t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);

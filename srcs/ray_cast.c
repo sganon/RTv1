@@ -6,7 +6,7 @@
 /*   By: sganon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 17:13:56 by sganon            #+#    #+#             */
-/*   Updated: 2016/05/12 17:03:07 by sganon           ###   ########.fr       */
+/*   Updated: 2016/05/17 12:17:48 by sganon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_vector	normalize_vector(t_vector vector)
 {
 	double	norme;
 
-	norme = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+	norme = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z 
+		* vector.z);
 	vector.x /= norme;
 	vector.y /= norme;
 	vector.z /= norme;
@@ -76,8 +77,10 @@ void	get_abc(t_env *e, t_objs *obj)
 	//printf("v.x: %f v.y: %f v.z: %f\n", v.x, v.y, v.z);
 	if (obj->id == SPH)
 	{
-		e->a = pow(e->vector.x, 2.) + pow(e->vector.y, 2.) + pow(e->vector.z, 2.);
-		e->b = 2. * ((v.x * e->vector.x) + (v.y * e->vector.y) + (v.z * e->vector.z));
+		e->a = pow(e->vector.x, 2.) + pow(e->vector.y, 2.) 
+		+ pow(e->vector.z, 2.);
+		e->b = 2. * ((v.x * e->vector.x) + (v.y * e->vector.y) 
+			+ (v.z * e->vector.z));
 		e->c = pow(v.x, 2.) + pow(v.y, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
 	}
 	if (obj->id == CYL)
@@ -88,10 +91,12 @@ void	get_abc(t_env *e, t_objs *obj)
 	}
 	if (obj->id == CON)
 	{
-		e->a = pow(e->vector.x, 2.) - pow(e->vector.y ,2.) + pow(e->vector.z, 2.);
-		e->b = 2. * ((v.x * e->vector.x) - (v.y * e->vector.y) + (v.z * e->vector.z));
+		e->a = pow(e->vector.x, 2.) - pow(e->vector.y ,2.) 
+		+ pow(e->vector.z, 2.);
+		e->b = 2. * ((v.x * e->vector.x) - (v.y * e->vector.y) 
+			+ (v.z * e->vector.z));
 		e->c = pow(v.x, 2.) - pow(v.y, 2.) +
-			pow(v.z, 2.);
+		pow(v.z, 2.);
 	}
 	if (obj->id != PLA)
 		e->delta = e->b * e->b - 4. * e->a * e->c;
@@ -110,7 +115,7 @@ double	get_norme(t_objs *obj)
 
 void	get_color(t_env *e, t_objs *obj, int x, int y)
 {
-	double		dir;
+	t_light		*begin_light;
 	t_vector	vector_light;
 	t_vector	normal;
 	t_cam		light_inter;
@@ -121,21 +126,26 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 		get_plane_color(e, obj, x, y);
 		return;
 	}
-	dir = get_norme(obj);
-	light_inter.x = (e->cam.x + (e->vector.x * dir));
-	light_inter.y = (e->cam.y + (e->vector.y * dir));
-	light_inter.z = (e->cam.z + (e->vector.z * dir));
-	vector_light.x = e->light.x - light_inter.x;
-	vector_light.y = e->light.y - light_inter.y;
-	vector_light.z = e->light.z - light_inter.z;
-	normal.x = ((light_inter.x) - obj->x);
-	normal.y = ((light_inter.y) - obj->y);
-	normal.z = ((light_inter.z) - obj->z);
-	normal = normalize_vector(normal);
-	vector_light = normalize_vector(vector_light);
-	cosi = vector_scalar(normal, vector_light);
-	e->vector = vector_light;
+	begin_light = e->light;
+	cosi = 0;
+	while(e->light)
+	{
+		light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
+		light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
+		light_inter.z = (e->cam.z + (e->vector.z * get_norme(obj)));
+		vector_light.x = e->light->x - light_inter.x;
+		vector_light.y = e->light->y - light_inter.y;
+		vector_light.z = e->light->z - light_inter.z;
+		normal.x = ((light_inter.x) - obj->x);
+		normal.y = ((light_inter.y) - obj->y);
+		normal.z = ((light_inter.z) - obj->z);
+		normal = normalize_vector(normal);
+		vector_light = normalize_vector(vector_light);
+		cosi = vector_scalar(normal, vector_light) > cosi ? vector_scalar(normal, vector_light) : cosi;
+		e->light = e->light->next;
+	}
 	draw_in_img(e, x, y, cosi, obj);
+	e->light = begin_light;
 }
 
 void	get_intersect(t_objs *obj, t_env *e, int x, int y)
@@ -190,4 +200,5 @@ void	cast(t_env *e, t_objs *obj)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(e->mlx, e->win, e->img_ptr, 0, 0);
 }
