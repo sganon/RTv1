@@ -38,15 +38,15 @@ void	draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj)
 	k = 2;
 	if (cosi <= 0)
 		cosi = 0;
-	if (cosi >= 1)
-		cosi = 1;
+//	if (shadow(e->begin_list, e, x, y))
+//		return ;
 	u.color = define_obj_color(obj);
 	if (x < WIN_X && y < WIN_Y)
 	{
 		p = x * e->bpp / 8 + y * e->sl;
-		e->img[p] = (t_bytes)u.rgb.r * (cosi);
-		e->img[p + 1] = (t_bytes)u.rgb.g * (cosi);
-		e->img[p + 2] = (t_bytes)u.rgb.b * (cosi);
+		e->img[p] = (u.rgb.r * (cosi));
+		e->img[p + 1] = (u.rgb.g * (cosi));
+		e->img[p + 2] = (u.rgb.b * (cosi));
 	}
 }
 
@@ -70,41 +70,6 @@ t_vector	get_vector(t_vector vector, int x, int y)
 	return (normalize_vector(vector));
 }
 
-void	get_abc(t_env *e, t_objs *obj)
-{
-	t_vector	v;
-
-	v = cam_object_vector(e->cam, obj);
-	v = rotate_obj(v, e, obj);
-	//printf("v.x: %f v.y: %f v.z: %f\n", v.x, v.y, v.z);
-	if (obj->id == SPH)
-	{
-		e->a = pow(e->vector.x, 2.) + pow(e->vector.y, 2.) 
-		+ pow(e->vector.z, 2.);
-		e->b = 2. * ((v.x * e->vector.x) + (v.y * e->vector.y) 
-			+ (v.z * e->vector.z));
-		e->c = pow(v.x, 2.) + pow(v.y, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
-	}
-	if (obj->id == CYL)
-	{
-		e->a = pow(e->vector.x, 2.) + pow(e->vector.z, 2.);
-		e->b = 2. * ((v.x * e->vector.x) + (v.z * e->vector.z));
-		e->c = pow(v.x, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
-	}
-	if (obj->id == CON)
-	{
-		e->a = pow(e->vector.x, 2.) - pow(e->vector.y ,2.) 
-		+ pow(e->vector.z, 2.);
-		e->b = 2. * ((v.x * e->vector.x) - (v.y * e->vector.y) 
-			+ (v.z * e->vector.z));
-		e->c = pow(v.x, 2.) - pow(v.y, 2.) +
-		pow(v.z, 2.);
-	}
-	if (obj->id != PLA)
-		e->delta = e->b * e->b - 4. * e->a * e->c;
-	else
-		e->delta = 0;
-}
 
 double	get_norme(t_objs *obj)
 {
@@ -144,11 +109,13 @@ void	get_color(t_env *e, t_objs *obj, int x, int y)
 		normal.z = ((light_inter.z) - obj->z);
 		normal = normalize_vector(normal);
 		vector_light = normalize_vector(vector_light);
-		cosi = vector_scalar(normal, vector_light) / i > cosi ? vector_scalar(normal, vector_light) / i : cosi;
+		cosi = (cosi + vector_scalar(normal, vector_light)) / i > cosi ? (cosi + vector_scalar(normal, vector_light)) / i : cosi;
 		i++;
+		e->lvector = cam_light_vector(light_inter, e->light);
+		e->light_inter = light_inter;
+		draw_in_img(e, x, y, cosi, obj);
 		e->light = e->light->next;
 	}
-	draw_in_img(e, x, y, cosi, obj);
 }
 
 void	get_intersect(t_objs *obj, t_env *e, int x, int y)

@@ -25,8 +25,8 @@ SRC =	main.c \
 		math_vector.c \
 		rotate.c \
 		rotate_object.c \
-		rotate_cam.c \
 		shadow.c \
+		abc.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

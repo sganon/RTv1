@@ -129,6 +129,8 @@ typedef struct			s_env
 	double				delta;
 	t_cam				cam;
 	t_vector			vector;
+	t_cam				light_inter;
+	t_vector			lvector;
 	t_col				col;
 	t_light				*light;
 	t_light				*begin_light;
@@ -157,6 +159,7 @@ t_vector				normalize_vector(t_vector vector);
 t_vector				vector_double(t_vector v);
 t_vector				new_vector(t_vector v1, t_vector v2);
 t_vector				cam_object_vector(t_cam cam, t_objs *obj);
+t_vector				cam_light_vector(t_cam cam, t_light *light);
 t_vector				rotate_obj(t_vector vector, t_env *e, t_objs *obj);
 t_vector				rotate_vector(t_vector vector, t_env *e);
 t_cam					rotate_cam(t_env *e);

@@ -21,13 +21,22 @@ t_vector	cam_object_vector(t_cam cam, t_objs *obj)
 	return (new_vector);
 }
 
+t_vector	cam_light_vector(t_cam cam, t_light *light)
+{
+	t_vector	new_vector;
+	new_vector.x = cam.x - light->x;
+	new_vector.y = cam.y - light->y;
+	new_vector.z = cam.z - light->z;
+	return (new_vector);
+}
+
 t_vector	new_vector(t_vector v1, t_vector v2)
 {
 	t_vector	new_vector;	
 	new_vector.x = v1.x - v2.x;
 	new_vector.y = v1.y - v2.y;
 	new_vector.z = v1.z - v2.z;
-	return (normalize_vector(new_vector));
+	return (new_vector);
 }
 
 t_vector	vector_double(t_vector v)

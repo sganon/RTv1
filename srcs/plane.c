@@ -18,12 +18,12 @@ void	get_plane_color(t_env *e, t_objs *obj, int x, int y)
 	t_vector	normal;
 	t_cam		light_inter;
 	double		cosi;
-	t_light		*begin_light;
 	int			i;
 
 
-	begin_light = e->light;
 	i = 1;
+	cosi = 0;
+	e->light = e->begin_light;
 	while(e->light)
 	{
 		light_inter.x = (e->cam.x + (e->vector.x * obj->s1));
@@ -37,13 +37,13 @@ void	get_plane_color(t_env *e, t_objs *obj, int x, int y)
 		normal.z = obj->z;
 		normal = normalize_vector(normal);
 		vector_light = normalize_vector(vector_light);
-		cosi = fabs(vector_scalar(normal, vector_light) / i) > cosi ?fabs(vector_scalar(normal, vector_light) / i) : cosi;
-		e->vector = vector_light;
+		cosi = fabs((cosi + vector_scalar(normal, vector_light)) / i) > cosi ?fabs((cosi + vector_scalar(normal, vector_light)) / i) : cosi;
 		i++;
+		e->lvector = vector_light;
+		e->light_inter = light_inter;
+		draw_in_img(e, x, y, cosi, obj);
 		e->light = e->light->next;
 	}
-	e->light = begin_light;
-	draw_in_img(e, x, y, cosi, obj);
 }
 
 void	plane_intersect(t_objs *obj, t_env *e, int x, int y)
@@ -58,9 +58,9 @@ void	plane_intersect(t_objs *obj, t_env *e, int x, int y)
 	v.x = e->cam.x;
 	v.y = e->cam.y;
 	v.z = e->cam.z;
-	n.x = obj->x;
-	n.y = obj->y;
-	n.z = obj->z;
+	n.x = obj->rx;
+	n.y = obj->ry;
+	n.z = obj->rz;
 	n_scalar_v = vector_scalar(n, v);
 	n_scalar_vector = vector_scalar(n, e->vector);
 	if (n_scalar_vector > 0)
