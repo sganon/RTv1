@@ -12,40 +12,6 @@
 
 #include "RTv1.h"
 
-void	get_plane_color(t_env *e, t_objs *obj, int x, int y)
-{
-	t_vector	vector_light;
-	t_vector	normal;
-	t_cam		light_inter;
-	double		cosi;
-	int			i;
-
-
-	i = 1;
-	cosi = 0;
-	e->light = e->begin_light;
-	while(e->light)
-	{
-		light_inter.x = (e->cam.x + (e->vector.x * obj->s1));
-		light_inter.y = (e->cam.y + (e->vector.y * obj->s1));
-		light_inter.z = (e->cam.z + (e->vector.z * obj->s1));
-		vector_light.x = light_inter.x - e->light->x;
-		vector_light.y = light_inter.y - e->light->y;
-		vector_light.z = light_inter.z - e->light->z;
-		normal.x = obj->x;
-		normal.y = obj->y;
-		normal.z = obj->z;
-		normal = normalize_vector(normal);
-		vector_light = normalize_vector(vector_light);
-		cosi = fabs((cosi + vector_scalar(normal, vector_light)) / i) > cosi ?fabs((cosi + vector_scalar(normal, vector_light)) / i) : cosi;
-		i++;
-		e->lvector = vector_light;
-		e->light_inter = light_inter;
-		draw_in_img(e, x, y, cosi, obj);
-		e->light = e->light->next;
-	}
-}
-
 void	plane_intersect(t_objs *obj, t_env *e, int x, int y)
 {
 	t_vector	n;

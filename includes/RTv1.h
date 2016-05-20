@@ -61,6 +61,9 @@ typedef struct			s_vector
 	double				x;
 	double				y;
 	double				z;
+	double				rx;
+	double				ry;
+	double				rz;
 }						t_vector;
 
 /* obj id :
@@ -146,11 +149,11 @@ int						shadow(t_objs *obj, t_env *e, int x, int y);
 char					*ft_trim(char *str);
 void					get_intersect(t_objs *obj, t_env *e, int x, int y);
 void					plane_intersect(t_objs *obj, t_env *e, int x, int y);
-void					get_abc(t_env *e, t_objs *obj);
-void					get_plane_color(t_env *e, t_objs *obj, int x, int y);
+void					get_abc(t_env *e, t_objs *obj, int nb);
 void					check_format(char *str, int i);
 void					parse_coord(char *str, int step, t_objs *obj);
 void					cast(t_env *e, t_objs *obj);
+void					light_cast(t_env *e, t_objs *obj, int x, int y);
 void					draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj);
 void					get_light(char *str, t_env *e);
 t_objs					*get_obj(char *str, t_objs *obj);
@@ -161,7 +164,9 @@ t_vector				new_vector(t_vector v1, t_vector v2);
 t_vector				cam_object_vector(t_cam cam, t_objs *obj);
 t_vector				cam_light_vector(t_cam cam, t_light *light);
 t_vector				rotate_obj(t_vector vector, t_env *e, t_objs *obj);
-t_vector				rotate_vector(t_vector vector, t_env *e);
+t_vector				rotate_x(t_vector vector, t_env *e, double rot);
+t_vector				rotate_y(t_vector vector, t_env *e, double rot);
+t_vector				rotate_z(t_vector vector, t_env *e, double rot);
 t_cam					rotate_cam(t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
 double					get_norme(t_objs *obj);

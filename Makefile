@@ -21,12 +21,14 @@ SRC =	main.c \
 		object_parsing2.c \
 		light_parsing.c \
 		ray_cast.c \
+		light_cast.c \
 		plane.c \
 		math_vector.c \
 		rotate.c \
 		rotate_object.c \
 		shadow.c \
 		abc.c \
+		draw_in_img.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

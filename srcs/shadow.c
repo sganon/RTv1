@@ -12,41 +12,6 @@
 
 #include "RTv1.h"
 
-static void	get_shadow_abc(t_env *e, t_objs *obj)
-{
-	t_vector	v;
-
-	v = cam_object_vector(e->light_inter, obj);
-	//v = rotate_obj(v, e, obj);
-	if (obj->id == SPH)
-	{
-		e->a = pow(e->lvector.x, 2.) + pow(e->lvector.y, 2.) 
-		+ pow(e->lvector.z, 2.);
-		e->b = 2. * ((v.x * e->lvector.x) + (v.y * e->lvector.y) 
-			+ (v.z * e->lvector.z));
-		e->c = pow(v.x, 2.) + pow(v.y, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
-	}
-	if (obj->id == CYL)
-	{
-		e->a = pow(e->lvector.x, 2.) + pow(e->lvector.z, 2.);
-		e->b = 2. * ((v.x * e->lvector.x) + (v.z * e->lvector.z));
-		e->c = pow(v.x, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
-	}
-	if (obj->id == CON)
-	{
-		e->a = pow(e->lvector.x, 2.) - pow(e->lvector.y ,2.) 
-		+ pow(e->lvector.z, 2.);
-		e->b = 2. * ((v.x * e->lvector.x) - (v.y * e->lvector.y) 
-			+ (v.z * e->lvector.z));
-		e->c = pow(v.x, 2.) - pow(v.y, 2.) +
-		pow(v.z, 2.);
-	}
-	if (obj->id != PLA)
-		e->delta = e->b * e->b - 4. * e->a * e->c;
-	else
-		e->delta = 0;
-}
-
 int		shadow(t_objs *obj, t_env *e, int x, int y)
 {
 	t_objs	*closest;
@@ -56,7 +21,7 @@ int		shadow(t_objs *obj, t_env *e, int x, int y)
 	s = INT_MAX;
 	while (obj)
 	{
-		get_shadow_abc(e, obj);
+		get_abc(e, obj, 2);
 		if (e->delta >= 0)
 		{
 			if (obj->id == PLA)
