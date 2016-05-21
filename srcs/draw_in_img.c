@@ -21,7 +21,7 @@ static int		define_obj_color(t_objs *obj)
 	if (obj->color == 2)
 		return (0x00FF00);
 	if (obj->color == 3)
-		return (0x0000FF);
+		return (0x00ABFF);
 	if (obj->color == 4)
 		return (0xFFFF00);
 	else
@@ -32,13 +32,14 @@ void			draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj)
 {
 	int		p;
 	t_color	u;
-	double	k;
+	double	a;
+	double	l;
 
-	k = 2;
+	a = 0.2;
+	l = 0.8;
 	if (cosi <= 0)
 		cosi = 0;
-//	if (shadow(e->begin_list, e, x, y))
-//		return ;
+	cosi = (a + (cosi * l));
 	u.color = define_obj_color(obj);
 	if (x < WIN_X && y < WIN_Y)
 	{

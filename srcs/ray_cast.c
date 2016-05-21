@@ -36,8 +36,13 @@ t_vector	get_vector(t_vector vector, int x, int y)
 
 double	get_norme(t_objs *obj)
 {
-	if (obj->s1 >= 0 && obj->s1 <= obj->s2)
-		return (obj->s1);
+	if (obj->s1 >= 0)
+	{
+		if (obj->s1 > obj->s2)
+			return (obj->s2);
+		else
+			return (obj->s1);
+	}
 	else
 		return (obj->s2);
 }
@@ -57,7 +62,7 @@ void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 		{
 			if (obj->id == PLA)
 			{
-				plane_intersect(obj, e, x, y);
+				plane_intersect(obj, e, 0);
 			}
 			else
 			{
@@ -88,9 +93,9 @@ void	cast(t_env *e, t_objs *obj)
 		while (x < WIN_X)
 		{
 			e->vector = get_vector(e->vector, x, y);
-			e->vector = rotate_x(e->vector, e, e->cam.rx);
-			e->vector = rotate_y(e->vector, e, e->cam.ry);
-			e->vector = rotate_y(e->vector, e, e->cam.rz);
+			//e->vector = rotate_x(e->vector, e, e->cam.rx);
+			//e->vector = rotate_y(e->vector, e, e->cam.ry);
+			//e->vector = rotate_y(e->vector, e, e->cam.rz);
 			get_intersect(obj, e, x, y);
 			x++;
 		}

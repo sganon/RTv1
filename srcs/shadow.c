@@ -12,7 +12,7 @@
 
 #include "RTv1.h"
 
-int		shadow(t_objs *obj, t_env *e, int x, int y)
+int		shadow(t_objs *obj, t_env *e)
 {
 	t_objs	*closest;
 	double	s;
@@ -22,11 +22,11 @@ int		shadow(t_objs *obj, t_env *e, int x, int y)
 	while (obj)
 	{
 		get_abc(e, obj, 2);
-		if (e->delta >= 0)
+		if (e->delta >= 0 && !obj->sh)
 		{
 			if (obj->id == PLA)
 			{
-				plane_intersect(obj, e, x, y);
+				plane_intersect(obj, e, 1);
 			}
 			else
 			{
@@ -39,6 +39,8 @@ int		shadow(t_objs *obj, t_env *e, int x, int y)
 				closest = obj;
 			}
 		}
+		if (obj->sh)
+			obj->sh = 0;
 		obj = obj->next;
 	}
 	if (closest)

@@ -17,20 +17,25 @@ static double	plane_light_cast(t_env *e, t_objs *obj)
 	t_vector	vector_light;
 	t_vector	normal;
 	t_cam		light_inter;
-
+	t_objs 		*tmp;
 
 	light_inter.x = (e->cam.x + (e->vector.x * obj->s1));
 	light_inter.y = (e->cam.y + (e->vector.y * obj->s1));
 	light_inter.z = (e->cam.z + (e->vector.z * obj->s1));
-	vector_light.x = light_inter.x - e->light->x;
-	vector_light.y = light_inter.y - e->light->y;
-	vector_light.z = light_inter.z - e->light->z;
+	vector_light.x = e->light->x - light_inter.x;
+	vector_light.y = e->light->y - light_inter.y;
+	vector_light.z = e->light->z - light_inter.z;
 	normal.x = obj->x;
 	normal.y = obj->y;
 	normal.z = obj->z;
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
+	e->lvector = vector_light;
 	e->light_inter = light_inter;
+	obj->sh = 1;
+	tmp = e->begin_list;
+	if (shadow(tmp, e))
+		return (fabs(vector_scalar(normal, vector_light) * 0.5));
 	return (fabs(vector_scalar(normal, vector_light)));
 }
 
@@ -39,6 +44,7 @@ static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
 	t_vector	vector_light;
 	t_vector	normal;
 	t_cam		light_inter;
+	t_objs		*tmp;
 
 	light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
 	light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
@@ -53,7 +59,12 @@ static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
 	normal.z = ((light_inter.z) - obj->z);
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
+	e->lvector = vector_light;
 	e->light_inter = light_inter;
+	obj->sh = 1;
+	tmp = e->begin_list;
+	if (shadow(tmp, e))
+		return (vector_scalar(normal, vector_light) * 0.5);
 	return (vector_scalar(normal, vector_light));	
 }
 
@@ -61,7 +72,13 @@ static double	cone_light_cast(t_env *e, t_objs *obj)
 {
 	t_vector	vector_light;
 	t_vector	normal;
+	t_cam		light_inter;
+	t_objs		*tmp;
 
+
+	light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
+	light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
+	light_inter.z = (e->cam.z + (e->vector.z * get_norme(obj)));
 	vector_light.x = e->light->x - (e->cam.x + (e->vector.x * get_norme(obj)));
 	vector_light.y = e->light->y - (e->cam.y + (e->vector.y * get_norme(obj)));
 	vector_light.z = e->light->z - (e->cam.z + (e->vector.z * get_norme(obj)));
@@ -70,6 +87,12 @@ static double	cone_light_cast(t_env *e, t_objs *obj)
 	normal.z = ((e->cam.z + (e->vector.z * get_norme(obj))) - obj->z);
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
+	e->lvector = vector_light;
+	e->light_inter = light_inter;
+	obj->sh = 1;
+	tmp = e->begin_list;
+	if (shadow(tmp, e))
+		return (vector_scalar(normal, vector_light) * 0.5);
 	return (vector_scalar(normal, vector_light));
 }
 

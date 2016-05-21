@@ -25,14 +25,14 @@ static	void	rotate(t_objs *obj, t_vector vector, t_vector pos, t_env *e)
 	vector.rz = pos.z;
 }
 */
-static void	sphere_abc(t_env *e, t_vector v, t_objs *obj)
+static void	sphere_abc(t_env *e, t_vector vector, t_vector v, t_objs *obj)
 {
-	e->a = pow(e->vector.x, 2.) + pow(e->vector.y, 2.) + pow(e->vector.z, 2.);
-	e->b = 2. * ((v.x * e->vector.x) + (v.y * e->vector.y) + (v.z * e->vector.z));
+	e->a = pow(vector.x, 2.) + pow(vector.y, 2.) + pow(vector.z, 2.);
+	e->b = 2. * ((v.x * vector.x) + (v.y * vector.y) + (v.z * vector.z));
 	e->c = pow(v.x, 2.) + pow(v.y, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
 }
 
-static void	cylinder_abc(t_env *e, t_vector v, t_objs *obj)
+static void	cylinder_abc(t_env *e, t_vector vector, t_vector v, t_objs *obj)
 {
 	//t_vector	pos;
 
@@ -40,32 +40,39 @@ static void	cylinder_abc(t_env *e, t_vector v, t_objs *obj)
 	//pos.y = obj->y;
 	//pos.z = obj->z;
 	//rotate(obj, e->vector, pos, e);
-	e->a = pow(e->vector.x, 2.) + pow(e->vector.z, 2.);
-	e->b = 2. * ((v.x * e->vector.x) + (v.z * e->vector.z));
+	e->a = pow(vector.x, 2.) + pow(vector.z, 2.);
+	e->b = 2. * ((v.x * vector.x) + (v.z * vector.z));
 	e->c = pow(v.x, 2.) + pow(v.z, 2.) - pow(obj->rayon, 2.);
 }
 
-static void	cone_abc(t_env *e, t_vector v)
+static void	cone_abc(t_env *e, t_vector vector, t_vector v)
 {
-	e->a = pow(e->vector.x, 2.) - pow(e->vector.y ,2.) + pow(e->vector.z, 2.);
-	e->b = 2. * ((v.x * e->vector.x) - (v.y * e->vector.y) + (v.z * e->vector.z));
+	e->a = pow(vector.x, 2.) - pow(vector.y ,2.) + pow(vector.z, 2.);
+	e->b = 2. * ((v.x * vector.x) - (v.y * vector.y) + (v.z * vector.z));
 	e->c = pow(v.x, 2.) - pow(v.y, 2.) + pow(v.z, 2.);
 }
 
 void	get_abc(t_env *e, t_objs *obj, int nb)
 {
 	t_vector	v;
+	t_vector	vec;
 
-	e->vector = rotate_obj(e->vector, e, obj);
-	v = cam_object_vector(e->cam, obj);
 	if(nb == 2)
-		v = cam_object_vector(e->light_inter, obj);
+	{
+		vec = rotate_obj(e->lvector, e, obj);
+		v = cam_object_vector(e->light_inter, obj, e);
+	}
+	else
+	{
+		vec = rotate_obj(e->vector, e, obj);
+		v = cam_object_vector(e->cam, obj, e);
+	}
 	if (obj->id == SPH)
-		sphere_abc(e, v, obj);
+		sphere_abc(e, vec, v, obj);
 	if (obj->id == CYL)
-		cylinder_abc(e, v, obj);
+		cylinder_abc(e, vec, v, obj);
 	if (obj->id == CON)
-		cone_abc(e, v);
+		cone_abc(e, vec, v);
 	if (obj->id != PLA)
 		e->delta = e->b * e->b - 4. * e->a * e->c;
 	else

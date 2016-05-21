@@ -52,7 +52,7 @@ t_objs	*manage_data(t_env *e, t_objs *obj)
 {
 	e->cam.x = obj->x;
 	e->cam.y = obj->y;
-	e->cam.y = obj->z;
+	e->cam.z = obj->z;
 	e->cam.rx = obj->rx;
 	e->cam.ry = obj->ry;
 	e->cam.rz = obj->rz;
