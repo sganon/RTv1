@@ -11,18 +11,16 @@
 /* ************************************************************************** */
 
 #include "RTv1.h"
-#include	<stdio.h>
 
-t_vector	normalize_vector(t_vector vector)
+t_vector	normalize_vector(t_vector v)
 {
 	double	norme;
 
-	norme = sqrt(vector.x * vector.x + vector.y * vector.y + vector.z 
-		* vector.z);
-	vector.x /= norme;
-	vector.y /= norme;
-	vector.z /= norme;
-	return (vector);
+	norme = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	v.x /= norme;
+	v.y /= norme;
+	v.z /= norme;
+	return (v);
 }
 
 t_vector	get_vector(t_vector vector, int x, int y)
@@ -33,8 +31,7 @@ t_vector	get_vector(t_vector vector, int x, int y)
 	return (normalize_vector(vector));
 }
 
-
-double	get_norme(t_objs *obj)
+double		get_norme(t_objs *obj)
 {
 	if (obj->s1 >= 0)
 	{
@@ -47,9 +44,8 @@ double	get_norme(t_objs *obj)
 		return (obj->s2);
 }
 
-void	get_intersect(t_objs *obj, t_env *e, int x, int y)
+void		get_intersect(t_objs *obj, t_env *e)
 {
-
 	t_objs	*closest;
 	double	s;
 
@@ -61,14 +57,9 @@ void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 		if (e->delta >= 0)
 		{
 			if (obj->id == PLA)
-			{
 				plane_intersect(obj, e, 0);
-			}
 			else
-			{
-				obj->s1 = (-(e->b) + sqrt(e->delta)) / (2. * e->a);
-				obj->s2 = (-(e->b) - sqrt(e->delta)) / (2. * e->a);
-			}
+				store_hit(obj, e);
 			if ((obj->s1 >= 0 && obj->s1 < s) || (obj->s2 >= 0 && obj->s2 < s))
 			{
 				s = get_norme(obj);
@@ -78,25 +69,22 @@ void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 		obj = obj->next;
 	}
 	if (closest)
-		light_cast(e, closest, x, y);
+		light_cast(e, closest);
 }
 
-void	cast(t_env *e, t_objs *obj)
+void		cast(t_env *e, t_objs *obj)
 {
-	int	y;
-	int	x;
-
-	y = 0;
-	while (y < WIN_Y)
+	e->y = 0;
+	while (e->y < WIN_Y)
 	{
-		x = 0;
-		while (x < WIN_X)
+		e->x = 0;
+		while (e->x < WIN_X)
 		{
-			e->vector = get_vector(e->vector, x, y);
-			get_intersect(obj, e, x, y);
-			x++;
+			e->vector = get_vector(e->vector, e->x, e->y);
+			get_intersect(obj, e);
+			e->x++;
 		}
-		y++;
+		e->y++;
 	}
 	mlx_put_image_to_window(e->mlx, e->win, e->img_ptr, 0, 0);
 }

@@ -28,22 +28,17 @@ static int		define_obj_color(t_objs *obj)
 		return (0x9E9E9E);
 }
 
-void			draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj)
+void			draw_in_img(t_env *e, double cosi, t_objs *obj)
 {
 	int		p;
 	t_color	u;
-	//double	a;
-	//double	l;
 
-	//a = 0.2;
-	//l = 0.8;
 	if (cosi <= 0)
 		cosi = 0;
-	//cosi = (a + (cosi * l));
 	u.color = define_obj_color(obj);
-	if (x < WIN_X && y < WIN_Y)
+	if (e->x < WIN_X && e->y < WIN_Y)
 	{
-		p = x * e->bpp / 8 + y * e->sl;
+		p = e->x * e->bpp / 8 + e->y * e->sl;
 		e->img[p] = (u.rgb.r * (cosi));
 		e->img[p + 1] = (u.rgb.g * (cosi));
 		e->img[p + 2] = (u.rgb.b * (cosi));

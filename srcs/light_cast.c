@@ -17,7 +17,7 @@ static double	plane_light_cast(t_env *e, t_objs *obj)
 	t_vector	vector_light;
 	t_vector	normal;
 	t_cam		light_inter;
-	t_objs 		*tmp;
+	t_objs		*tmp;
 
 	light_inter.x = (e->cam.x + (e->vector.x * obj->s1));
 	light_inter.y = (e->cam.y + (e->vector.y * obj->s1));
@@ -64,7 +64,7 @@ static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
 	tmp = e->begin_list;
 	if (shadow(tmp, e))
 		return (0.2 + vector_scalar(normal, vector_light) * 0.4);
-	return (0.2 + vector_scalar(normal, vector_light) * 0.8);	
+	return (0.2 + vector_scalar(normal, vector_light) * 0.8);
 }
 
 static double	cone_light_cast(t_env *e, t_objs *obj)
@@ -73,7 +73,6 @@ static double	cone_light_cast(t_env *e, t_objs *obj)
 	t_vector	normal;
 	t_cam		light_inter;
 	t_objs		*tmp;
-
 
 	light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
 	light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
@@ -95,24 +94,31 @@ static double	cone_light_cast(t_env *e, t_objs *obj)
 	return (0.2 + vector_scalar(normal, vector_light) * 0.8);
 }
 
-void	light_cast(t_env *e, t_objs *obj, int x, int y)
+void			light_cast(t_env *e, t_objs *obj)
 {
-	int			i;
 	double		cosi;
+	double		tmp;
 
 	cosi = 0;
-	i = 1;
 	e->light = e->begin_light;
-	while(e->light)
+	while (e->light)
 	{
 		if (obj->id == SPH || obj->id == CYL)
-			cosi = sphere_and_cylinder_light_cast(e, obj) > cosi ? sphere_and_cylinder_light_cast(e, obj) : cosi;
+		{
+			tmp = sphere_and_cylinder_light_cast(e, obj);
+			cosi = tmp > cosi ? tmp : cosi;
+		}
 		else if (obj->id == CON)
-			cosi = cone_light_cast(e, obj) > cosi ? cone_light_cast(e, obj) : cosi;
+		{
+			tmp = cone_light_cast(e, obj);
+			cosi = tmp > cosi ? tmp : cosi;
+		}
 		else if (obj->id == PLA)
-			cosi = plane_light_cast(e, obj) > cosi ? plane_light_cast(e, obj) : cosi;
-		i++;
-		draw_in_img(e, x, y, cosi, obj);
+		{
+			tmp = plane_light_cast(e, obj);
+			cosi = tmp > cosi ? tmp : cosi;
+		}
+		draw_in_img(e, cosi, obj);
 		e->light = e->light->next;
 	}
 }

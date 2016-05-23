@@ -12,28 +12,11 @@
 
 #include "RTv1.h"
 
-#include <stdio.h>
-
-int		get_obj_type(char *str)
-{
-	if (str[0] == 's')
-		return (6);
-	if (str[0] == 'c' && str[1] == 'y')
-		return (8);
-	if (str[0] == 'c' && str[1] == 'o')
-		return (4);
-	if (str[0] == 'p')
-		return (5);
-	else
-		return (0);
-}
-
-
-void	get_coord(char *str, int i, t_objs *obj)
+static void	get_coord(char *str, int i, t_objs *obj)
 {
 	char	buffer[12];
-	int	tmp;
-	int	step;
+	int		tmp;
+	int		step;
 
 	check_format(str, i);
 	tmp = 0;
@@ -58,7 +41,7 @@ void	get_coord(char *str, int i, t_objs *obj)
 	}
 }
 
-void	get_obj_coord(char *str, t_objs *obj)
+static void	get_obj_coord(char *str, t_objs *obj)
 {
 	int	i;
 
@@ -67,14 +50,12 @@ void	get_obj_coord(char *str, t_objs *obj)
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '(')
-	{
 		get_coord(str, i + 1, obj);
-	}
 	else
 		ft_error("'(' expected for object coordinate", 2);
 }
 
-char	*find_first_obj(char *str)
+static char	*find_first_obj(char *str)
 {
 	unsigned int	i;
 	unsigned int	min_i;
@@ -101,10 +82,10 @@ char	*find_first_obj(char *str)
 char		*ft_trim(char *str)
 {
 	char	*new;
-	int	i;
+	int		i;
 
 	i = 0;
-	if(!str)
+	if (!str)
 		return (str);
 	while (str[i] != '\n')
 		i++;
@@ -115,7 +96,7 @@ char		*ft_trim(char *str)
 t_objs		*get_obj(char *str, t_objs *obj)
 {
 	t_objs	*begin;
-	
+
 	begin = obj;
 	while ((str = find_first_obj(str)) != NULL)
 	{

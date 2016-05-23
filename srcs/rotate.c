@@ -32,7 +32,7 @@ t_vector	rotate_y(t_vector vector, t_env *e, double rot)
 	double	old_x;
 	double	old_z;
 
-	rot = rot * 100; 
+	rot = rot * 100;
 	rot = rot >= 36000.0 ? rot - 36000.0 : rot;
 	rot = rot < 0 ? rot + 36000.0 : rot;
 	old_x = vector.x;
