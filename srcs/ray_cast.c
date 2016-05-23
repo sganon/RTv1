@@ -54,7 +54,7 @@ void	get_intersect(t_objs *obj, t_env *e, int x, int y)
 	double	s;
 
 	closest = NULL;
-	s = INT_MAX;
+	s = INT_MAX - 1;
 	while (obj)
 	{
 		get_abc(e, obj, 1);
@@ -93,9 +93,6 @@ void	cast(t_env *e, t_objs *obj)
 		while (x < WIN_X)
 		{
 			e->vector = get_vector(e->vector, x, y);
-			//e->vector = rotate_x(e->vector, e, e->cam.rx);
-			//e->vector = rotate_y(e->vector, e, e->cam.ry);
-			//e->vector = rotate_y(e->vector, e, e->cam.rz);
 			get_intersect(obj, e, x, y);
 			x++;
 		}

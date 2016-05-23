@@ -32,14 +32,14 @@ void			draw_in_img(t_env *e, int x, int y, double cosi, t_objs *obj)
 {
 	int		p;
 	t_color	u;
-	double	a;
-	double	l;
+	//double	a;
+	//double	l;
 
-	a = 0.2;
-	l = 0.8;
+	//a = 0.2;
+	//l = 0.8;
 	if (cosi <= 0)
 		cosi = 0;
-	cosi = (a + (cosi * l));
+	//cosi = (a + (cosi * l));
 	u.color = define_obj_color(obj);
 	if (x < WIN_X && y < WIN_Y)
 	{

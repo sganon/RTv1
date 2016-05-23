@@ -35,8 +35,8 @@ static double	plane_light_cast(t_env *e, t_objs *obj)
 	obj->sh = 1;
 	tmp = e->begin_list;
 	if (shadow(tmp, e))
-		return (fabs(vector_scalar(normal, vector_light) * 0.5));
-	return (fabs(vector_scalar(normal, vector_light)));
+		return (0.2 + fabs(vector_scalar(normal, vector_light)) * 0.4);
+	return (0.2 + fabs(vector_scalar(normal, vector_light)) * 0.8);
 }
 
 static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
@@ -53,9 +53,8 @@ static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
 	vector_light.y = e->light->y - light_inter.y;
 	vector_light.z = e->light->z - light_inter.z;
 	normal.x = ((light_inter.x) - obj->x);
-	normal.y = ((light_inter.y) - obj->y);
-	if (obj->id == CYL)
-		normal.y = 0;
+	if (obj->id == SPH)
+		normal.y = ((light_inter.y) - obj->y);
 	normal.z = ((light_inter.z) - obj->z);
 	normal = normalize_vector(normal);
 	vector_light = normalize_vector(vector_light);
@@ -64,8 +63,8 @@ static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
 	obj->sh = 1;
 	tmp = e->begin_list;
 	if (shadow(tmp, e))
-		return (vector_scalar(normal, vector_light) * 0.5);
-	return (vector_scalar(normal, vector_light));	
+		return (0.2 + vector_scalar(normal, vector_light) * 0.4);
+	return (0.2 + vector_scalar(normal, vector_light) * 0.8);	
 }
 
 static double	cone_light_cast(t_env *e, t_objs *obj)
@@ -92,8 +91,8 @@ static double	cone_light_cast(t_env *e, t_objs *obj)
 	obj->sh = 1;
 	tmp = e->begin_list;
 	if (shadow(tmp, e))
-		return (vector_scalar(normal, vector_light) * 0.5);
-	return (vector_scalar(normal, vector_light));
+		return (0.2 + vector_scalar(normal, vector_light) * 0.4);
+	return (0.2 + vector_scalar(normal, vector_light) * 0.8);
 }
 
 void	light_cast(t_env *e, t_objs *obj, int x, int y)
