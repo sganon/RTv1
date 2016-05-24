@@ -172,6 +172,7 @@ t_vector				rotate_y(t_vector vector, t_env *e, double rot);
 t_vector				rotate_z(t_vector vector, t_env *e, double rot);
 t_cam					rotate_cam(t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
+double					specular_light(t_env *e, t_vector light, t_vector normal);
 double					get_norme(t_objs *obj);
 
 # endif

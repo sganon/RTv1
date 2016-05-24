@@ -29,6 +29,7 @@ SRC =	main.c \
 		shadow.c \
 		abc.c \
 		draw_in_img.c \
+		specular.c \
 
 SRC_LIST =	$(addprefix srcs/, $(SRC))
 

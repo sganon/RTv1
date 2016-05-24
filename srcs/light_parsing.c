@@ -30,7 +30,7 @@ static void	parse_light_coord(t_env *e, char *str, int i)
 	int		step;
 	char	buffer[256];
 
-	check_format(str, i);
+	check_format(str, i + 1);
 	tmp = 0;
 	step = 0;
 	while (str[++i] != '\n')
@@ -59,7 +59,7 @@ static void	get_light_coord(char *str, t_env *e)
 	while (ft_isspace(str[i]))
 		i++;
 	if (str[i] == '(')
-		parse_light_coord(e, str, i + 1);
+		parse_light_coord(e, str, i);
 	else
 		ft_error("'(' expected for light coordinate", 2);
 }

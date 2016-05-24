@@ -14,84 +14,55 @@
 
 static double	plane_light_cast(t_env *e, t_objs *obj)
 {
-	t_vector	vector_light;
 	t_vector	normal;
-	t_cam		light_inter;
 	t_objs		*tmp;
+	double		cosi;
 
-	light_inter.x = (e->cam.x + (e->vector.x * obj->s1));
-	light_inter.y = (e->cam.y + (e->vector.y * obj->s1));
-	light_inter.z = (e->cam.z + (e->vector.z * obj->s1));
-	vector_light.x = e->light->x - light_inter.x;
-	vector_light.y = e->light->y - light_inter.y;
-	vector_light.z = e->light->z - light_inter.z;
+	e->light_inter.x = (e->cam.x + (e->vector.x * obj->s1));
+	e->light_inter.y = (e->cam.y + (e->vector.y * obj->s1));
+	e->light_inter.z = (e->cam.z + (e->vector.z * obj->s1));
+	e->lvector.x = e->light->x - e->light_inter.x;
+	e->lvector.y = e->light->y - e->light_inter.y;
+	e->lvector.z = e->light->z - e->light_inter.z;
 	normal.x = obj->x;
 	normal.y = obj->y;
 	normal.z = obj->z;
 	normal = normalize_vector(normal);
-	vector_light = normalize_vector(vector_light);
-	e->lvector = vector_light;
-	e->light_inter = light_inter;
+	e->lvector = normalize_vector(e->lvector);
 	obj->sh = 1;
 	tmp = e->begin_list;
+	cosi = 0.5 * fabs(vector_scalar(normal, e->lvector)) + specular_light(e, e->
+		lvector, normal) * 0.5;
 	if (shadow(tmp, e))
-		return (0.2 + fabs(vector_scalar(normal, vector_light)) * 0.4);
-	return (0.2 + fabs(vector_scalar(normal, vector_light)) * 0.8);
+		return (cosi / 2);
+	return (cosi);
 }
 
-static double	sphere_and_cylinder_light_cast(t_env *e, t_objs *obj)
+static double	non_plan_light_cast(t_env *e, t_objs *obj)
 {
-	t_vector	vector_light;
 	t_vector	normal;
-	t_cam		light_inter;
 	t_objs		*tmp;
+	double		cosi;
 
-	light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
-	light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
-	light_inter.z = (e->cam.z + (e->vector.z * get_norme(obj)));
-	vector_light.x = e->light->x - light_inter.x;
-	vector_light.y = e->light->y - light_inter.y;
-	vector_light.z = e->light->z - light_inter.z;
-	normal.x = ((light_inter.x) - obj->x);
+	e->light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
+	e->light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
+	e->light_inter.z = (e->cam.z + (e->vector.z * get_norme(obj)));
+	e->lvector.x = e->light->x - e->light_inter.x;
+	e->lvector.y = e->light->y - e->light_inter.y;
+	e->lvector.z = e->light->z - e->light_inter.z;
+	normal.x = e->light_inter.x - obj->x;
 	if (obj->id == SPH)
-		normal.y = ((light_inter.y) - obj->y);
-	normal.z = ((light_inter.z) - obj->z);
+		normal.y = e->light_inter.y - obj->y;
+	normal.z = e->light_inter.z - obj->z;
 	normal = normalize_vector(normal);
-	vector_light = normalize_vector(vector_light);
-	e->lvector = vector_light;
-	e->light_inter = light_inter;
+	e->lvector = normalize_vector(e->lvector);
 	obj->sh = 1;
 	tmp = e->begin_list;
+	cosi = 0.5 * vector_scalar(normal, e->lvector) + specular_light(e, e->
+		lvector, normal) * 0.5;
 	if (shadow(tmp, e))
-		return (0.2 + vector_scalar(normal, vector_light) * 0.4);
-	return (0.2 + vector_scalar(normal, vector_light) * 0.8);
-}
-
-static double	cone_light_cast(t_env *e, t_objs *obj)
-{
-	t_vector	vector_light;
-	t_vector	normal;
-	t_cam		light_inter;
-	t_objs		*tmp;
-
-	light_inter.x = (e->cam.x + (e->vector.x * get_norme(obj)));
-	light_inter.y = (e->cam.y + (e->vector.y * get_norme(obj)));
-	light_inter.z = (e->cam.z + (e->vector.z * get_norme(obj)));
-	vector_light.x = e->light->x - (e->cam.x + (e->vector.x * get_norme(obj)));
-	vector_light.y = e->light->y - (e->cam.y + (e->vector.y * get_norme(obj)));
-	vector_light.z = e->light->z - (e->cam.z + (e->vector.z * get_norme(obj)));
-	normal.x = ((e->cam.x + (e->vector.x * get_norme(obj))) - obj->x);
-	normal.y = ((e->cam.y - (e->vector.y * get_norme(obj))) - obj->y);
-	normal.z = ((e->cam.z + (e->vector.z * get_norme(obj))) - obj->z);
-	normal = normalize_vector(normal);
-	vector_light = normalize_vector(vector_light);
-	e->lvector = vector_light;
-	e->light_inter = light_inter;
-	obj->sh = 1;
-	tmp = e->begin_list;
-	if (shadow(tmp, e))
-		return (0.2 + vector_scalar(normal, vector_light) * 0.4);
-	return (0.2 + vector_scalar(normal, vector_light) * 0.8);
+		return (cosi / 2);
+	return (cosi);
 }
 
 void			light_cast(t_env *e, t_objs *obj)
@@ -103,17 +74,12 @@ void			light_cast(t_env *e, t_objs *obj)
 	e->light = e->begin_light;
 	while (e->light)
 	{
-		if (obj->id == SPH || obj->id == CYL)
+		if (obj->id != PLA)
 		{
-			tmp = sphere_and_cylinder_light_cast(e, obj);
+			tmp = non_plan_light_cast(e, obj);
 			cosi = tmp > cosi ? tmp : cosi;
 		}
-		else if (obj->id == CON)
-		{
-			tmp = cone_light_cast(e, obj);
-			cosi = tmp > cosi ? tmp : cosi;
-		}
-		else if (obj->id == PLA)
+		else
 		{
 			tmp = plane_light_cast(e, obj);
 			cosi = tmp > cosi ? tmp : cosi;
