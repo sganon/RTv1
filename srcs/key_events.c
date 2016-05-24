@@ -14,8 +14,20 @@
 
 int		key_events(int key, t_env *e)
 {
-	(void)e;
 	if (key == ESC)
 		exit(0);
+	if (key == W_KEY)
+		e->cam.z += 1;
+	if (key == S_KEY)
+		e->cam.z -= 1;
+	if (key == A_KEY)
+		e->cam.x -= 1;
+	if (key == D_KEY)
+		e->cam.x += 1;
+	if (key == Q_KEY && (e->cam.rx += 10) < 36000.0)
+		e->cam.rx += 10;
+	if (key == E_KEY && (e->cam.rx -= 10) > -29999.0)
+		e->cam.rx -= 10;
+	expose_hook(e);
 	return (1);
 }

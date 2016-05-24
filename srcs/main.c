@@ -45,6 +45,8 @@ int		expose_hook(t_env *e)
 		create_image(e);
 	cast(e, e->begin_list);
 	mlx_do_sync(e->mlx);
+	mlx_put_image_to_window(e->mlx, e->win, e->img_ptr, 0, 0);
+	ft_bzero(e->img, (WIN_X * e->bpp / 8 + WIN_Y * e->sl));
 	return (1);
 }
 

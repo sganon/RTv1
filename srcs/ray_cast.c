@@ -86,5 +86,4 @@ void		cast(t_env *e, t_objs *obj)
 		}
 		e->y++;
 	}
-	mlx_put_image_to_window(e->mlx, e->win, e->img_ptr, 0, 0);
 }

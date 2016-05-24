@@ -28,6 +28,12 @@
 # define INT_MAX	2147483647 
 
 # define ESC	53
+# define W_KEY	13
+# define S_KEY	1
+# define A_KEY	0
+# define D_KEY	2
+# define Q_KEY	12
+# define E_KEY	14
 
 # define SQR(x)	(x * x)
 
@@ -145,6 +151,7 @@ typedef struct			s_env
 
 int						init_env(t_env *e);
 int						create_image(t_env *e);
+int						expose_hook(t_env *e);
 int						key_events(int key, t_env *e);
 int						get_camera(char *str, t_objs *obj);
 int						get_obj_type(char *str);
@@ -170,7 +177,7 @@ t_vector				rotate_obj(t_vector vector, t_env *e, t_objs *obj);
 t_vector				rotate_x(t_vector vector, t_env *e, double rot);
 t_vector				rotate_y(t_vector vector, t_env *e, double rot);
 t_vector				rotate_z(t_vector vector, t_env *e, double rot);
-t_cam					rotate_cam(t_env *e);
+t_cam					rotate_cam(t_cam cam, t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
 double					specular_light(t_env *e, t_vector light, t_vector normal);
 double					get_norme(t_objs *obj);
