@@ -70,7 +70,7 @@ void			light_cast(t_env *e, t_objs *obj)
 	double		cosi;
 	double		tmp;
 
-	cosi = 0;
+	cosi = 0.2;
 	e->light = e->begin_light;
 	while (e->light)
 	{
