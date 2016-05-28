@@ -40,7 +40,7 @@ void		get_abc(t_env *e, t_objs *obj, int nb)
 
 	if (nb == 2)
 	{
-		vec = rotate_obj(e->lvector, e, obj);
+		vec = e->lvector;
 		v = cam_object_vector(e->light_inter, obj, e);
 	}
 	else

@@ -17,27 +17,27 @@
 void	parse_coord(char *str, int step, t_objs *obj)
 {
 	if (step > 6 && obj->id != SPH && obj->id != CYL)
-		ft_error("Too much argument for sphere declaration, expcted: 5", 2);
+		ft_error("Too much argument for sphere declaration, expcted: 7", 2);
 	if (step > 7 && (obj->id == SPH || obj->id == CYL))
-		ft_error("Too much argument for object declaration, expcted: 3", 2);
+		ft_error("Too much argument for object declaration, expcted: 8", 2);
 	if (step == 0)
-		obj->x = ft_atoi(str);
+		obj->x = ft_atof(str);
 	if (step == 1)
-		obj->y = ft_atoi(str);
+		obj->y = ft_atof(str);
 	if (step == 2)
-		obj->z = ft_atoi(str);
+		obj->z = ft_atof(str);
 	if (step == 3)
-		obj->rx = ft_atoi(str);
+		obj->rx = ft_atof(str);
 	if (step == 4)
-		obj->ry = ft_atoi(str);
+		obj->ry = ft_atof(str);
 	if (step == 5)
 		obj->rz = ft_atoi(str);
 	if (step == 6 && (obj->id == SPH || obj->id == CYL))
-		obj->rayon = ft_atoi(str);
+		obj->rayon = ft_atof(str);
 	else if (step == 6)
-		obj->color = ft_atoi(str);
+		obj->color = ft_atof(str);
 	if (step == 7 && (obj->id == SPH || obj->id == CYL))
-		obj->color = ft_atoi(str);
+		obj->color = ft_atof(str);
 }
 
 int		get_obj_type(char *str)

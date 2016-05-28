@@ -18,6 +18,7 @@ static void	init_value(t_info *env)
 	env->e = 0;
 	env->sign = 1;
 	env->i = 0;
+	env->count = 0;
 }
 
 static void	check_power(t_info *env, char *s)
@@ -50,14 +51,14 @@ static void	check_power(t_info *env, char *s)
 double		ft_atof(char *s)
 {
 	t_info	*env;
-	int		count;
 
-	count = 0;
 	if ((env = malloc(sizeof(t_info))) == NULL)
 		ft_error("error: env malloc failed in ft_atof.c", 2);
-	if (s[0] == '-' && *s++)
-		count = 1;
 	init_value(env);
+	while (*s && ft_isspace(*s))
+		s++;
+	if (*s == '-' && *s++)
+		env->count = 1;
 	while ((env->c = *s++) != 0 && ft_isdigit(env->c))
 		env->a = env->a * 10.0 + (env->c - '0');
 	check_power(env, s);
@@ -71,7 +72,7 @@ double		ft_atof(char *s)
 		env->a *= 0.1;
 		env->e++;
 	}
-	if (count == 1)
+	if (env->count == 1)
 		env->a = env->a * -1;
 	return (env->a);
 }

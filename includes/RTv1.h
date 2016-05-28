@@ -97,7 +97,7 @@ typedef struct			s_objs
 	double				rx;
 	double				ry;
 	double				rz;
-	int					rayon;
+	double				rayon;
 	int					color;
 	int					sh;
 	double				s1;

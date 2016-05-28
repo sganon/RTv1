@@ -34,6 +34,7 @@ typedef struct		s_info
 	int				c;
 	int				sign;
 	int				i;
+	int				count;
 }					t_info;
 
 typedef struct		s_list

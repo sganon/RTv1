@@ -17,17 +17,17 @@ static void	stock_cam_coord(char *str, int step, t_objs *obj)
 	if (step > 5)
 		ft_error("Too much coordinate for camera: expected 3", 2);
 	if (step == 0)
-		obj->x = ft_atoi(str);
+		obj->x = ft_atof(str);
 	if (step == 1)
-		obj->y = ft_atoi(str);
+		obj->y = ft_atof(str);
 	if (step == 2)
-		obj->z = ft_atoi(str);
+		obj->z = ft_atof(str);
 	if (step == 3)
-		obj->rx = ft_atoi(str);
+		obj->rx = ft_atof(str);
 	if (step == 4)
-		obj->ry = ft_atoi(str);
+		obj->ry = ft_atof(str);
 	if (step == 5)
-		obj->rz = ft_atoi(str);
+		obj->rz = ft_atof(str);
 }
 
 void		check_format(char *str, int i)

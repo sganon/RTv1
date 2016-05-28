@@ -25,9 +25,9 @@ int		key_events(int key, t_env *e)
 	if (key == D_KEY)
 		e->cam.x += 1;
 	if (key == Q_KEY && (e->cam.rx += 10) < 36000.0)
-		e->cam.rx += 10;
+		e->cam.ry += 10;
 	if (key == E_KEY && (e->cam.rx -= 10) > -29999.0)
-		e->cam.rx -= 10;
+		e->cam.ry -= 10;
 	expose_hook(e);
 	return (1);
 }
