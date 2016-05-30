@@ -24,10 +24,14 @@ int		key_events(int key, t_env *e)
 		e->cam.x -= 1;
 	if (key == D_KEY)
 		e->cam.x += 1;
+	if (key == UP_KEY)
+		e->cam.y += 1;
+	if (key == DOWN_KEY)
+		e->cam.y -= 1;
 	if (key == Q_KEY && (e->cam.rx += 10) < 36000.0)
-		e->cam.ry += 10;
+		e->cam.rx += 2;
 	if (key == E_KEY && (e->cam.rx -= 10) > -29999.0)
-		e->cam.ry -= 10;
+		e->cam.rx -= 2;
 	expose_hook(e);
 	return (1);
 }

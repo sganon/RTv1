@@ -23,6 +23,17 @@ t_vector	cam_object_vector(t_cam cam, t_objs *obj, t_env *e)
 	return (new_vector);
 }
 
+t_vector	cam_plane_vector(t_cam cam, t_objs *obj, t_env *e)
+{
+	t_vector	new_vector;
+
+	cam = rotate_cam(cam, e);
+	new_vector.x = obj->x - cam.x;
+	new_vector.y = obj->y - cam.y;
+	new_vector.z = obj->z - cam.z;
+	return (new_vector);
+}
+
 t_vector	cam_light_vector(t_cam cam, t_light *light)
 {
 	t_vector	new_vector;

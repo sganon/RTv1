@@ -34,7 +34,7 @@ static double	plane_light_cast(t_env *e, t_objs *obj)
 	cosi = 0.5 * fabs(vector_scalar(normal, e->lvector)) + specular_light(e, e->
 		lvector, normal) * 0.5;
 	if (shadow(tmp, e))
-		return (cosi / 2);
+		return (0);
 	return (cosi);
 }
 
@@ -69,22 +69,29 @@ void			light_cast(t_env *e, t_objs *obj)
 {
 	double		cosi;
 	double		tmp;
+	int 		i;
 
 	cosi = 0.2;
 	e->light = e->begin_light;
+	i = 1;
 	while (e->light)
 	{
 		if (obj->id != PLA)
 		{
 			tmp = non_plan_light_cast(e, obj);
-			cosi = tmp > cosi ? tmp : cosi;
+			tmp = tmp < 0 ? 0 : tmp;
+			cosi = (cosi + tmp) / i;
+			cosi = cosi > 1 ? 1 : cosi;
 		}
 		else
 		{
 			tmp = plane_light_cast(e, obj);
-			cosi = tmp > cosi ? tmp : cosi;
+			tmp = tmp < 0 ? 0 : tmp;
+			cosi = (cosi + tmp) / i;
+			cosi = cosi > 1 ? 1 : cosi;
 		}
 		draw_in_img(e, cosi, obj);
+		i++;
 		e->light = e->light->next;
 	}
 }

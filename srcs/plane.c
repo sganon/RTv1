@@ -37,10 +37,10 @@ void			plane_intersect(t_objs *obj, t_env *e, int shadow)
 	t_cam		cam;
 
 	cam = get_cam(e, shadow);
-	v = cam_object_vector(cam, obj, e);
-	n.x = obj->x;
-	n.y = obj->y;
-	n.z = obj->z;
+	v = cam_plane_vector(cam, obj, e);
+	n.x = obj->rx;
+	n.y = obj->ry;
+	n.z = obj->rz;
 	n = rotate_obj(n, e, obj);
 	n_scalar_vector = get_n_scalar_vector(e, n, shadow);
 	n_scalar_v = vector_scalar(n, v);
