@@ -173,7 +173,7 @@ t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);
 t_vector				new_vector(t_vector v1, t_vector v2);
-t_vector				cam_object_vector(t_cam cam, t_objs *obj, t_env *e);
+t_vector				cam_object_vector(t_cam cam, t_objs *obj, t_env *e, int shadow);
 t_vector				cam_plane_vector(t_cam cam, t_objs *obj, t_env *e);
 t_vector				cam_light_vector(t_cam cam, t_light *light);
 t_vector				rotate_obj(t_vector vector, t_env *e, t_objs *obj);

@@ -32,10 +32,10 @@ int		shadow(t_objs *obj, t_env *e)
 		if (e->delta >= 0 && !obj->sh)
 		{
 			if (obj->id == PLA)
-				plane_intersect(obj, e, 1);
+				obj->s1 = INT_MAX;
 			else
 				store_hit(obj, e);
-			if ((obj->s1 >= 0 && obj->s1 < s) || (obj->s2 >= 0 && obj->s2 < s))
+			if ((obj->s1 > 0 && obj->s1 < s) || (obj->s2 > 0 && obj->s2 < s))
 			{
 				s = get_norme(obj);
 				closest = obj;

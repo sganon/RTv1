@@ -33,20 +33,20 @@ static void	cone_abc(t_env *e, t_vector vector, t_vector v)
 	e->c = pow(v.x, 2.) - pow(v.y, 2.) + pow(v.z, 2.);
 }
 
-void		get_abc(t_env *e, t_objs *obj, int nb)
+void		get_abc(t_env *e, t_objs *obj, int shadow)
 {
 	t_vector	v;
 	t_vector	vec;
 
-	if (nb == 2)
+	if (shadow == 2)
 	{
 		vec = rotate_obj(e->lvector, e, obj);
-		v = cam_object_vector(e->light_inter, obj, e);
+		v = cam_object_vector(e->light_inter, obj, e, shadow);
 	}
 	else
 	{
 		vec = rotate_obj(e->vector, e, obj);
-		v = cam_object_vector(e->cam, obj, e);
+		v = cam_object_vector(e->cam, obj, e, shadow);
 	}
 	if (obj->id == SPH)
 		sphere_abc(e, vec, v, obj);

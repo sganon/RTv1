@@ -12,14 +12,22 @@
 
 #include "RTv1.h"
 
-t_vector	cam_object_vector(t_cam cam, t_objs *obj, t_env *e)
+t_vector	cam_object_vector(t_cam cam, t_objs *obj, t_env *e, int shadow)
 {
 	t_vector	new_vector;
 
-	cam = rotate_cam(cam, e);
 	new_vector.x = cam.x - obj->x;
 	new_vector.y = cam.y - obj->y;
 	new_vector.z = cam.z - obj->z;
+	if (shadow == 2)
+	{
+		new_vector = rotate_x(new_vector, e, e->cam.rx);
+		new_vector = rotate_y(new_vector, e, e->cam.ry);
+		new_vector = rotate_z(new_vector, e, e->cam.rz);
+	}	
+	new_vector = rotate_x(new_vector, e, cam.rx);
+	new_vector = rotate_y(new_vector, e, cam.ry);
+	new_vector = rotate_z(new_vector, e, cam.rz);
 	return (new_vector);
 }
 
@@ -31,6 +39,9 @@ t_vector	cam_plane_vector(t_cam cam, t_objs *obj, t_env *e)
 	new_vector.x = obj->x - cam.x;
 	new_vector.y = obj->y - cam.y;
 	new_vector.z = obj->z - cam.z;
+	new_vector = rotate_x(new_vector, e, cam.rx);
+	new_vector = rotate_y(new_vector, e, cam.ry);
+	new_vector = rotate_z(new_vector, e, cam.rz);
 	return (new_vector);
 }
 

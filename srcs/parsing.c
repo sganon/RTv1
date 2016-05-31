@@ -45,6 +45,6 @@ t_objs		*parsing(char *filename, t_env *e, t_objs *obj)
 		free(str);
 	}
 	if (ret == -1)
-		return (0);
+		return (NULL);
 	return (get_data(tmp, obj, e));
 }

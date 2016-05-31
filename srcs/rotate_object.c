@@ -62,6 +62,8 @@ t_vector	rotate_obj_x(t_vector vector, t_env *e, t_objs *obj)
 
 t_vector	rotate_obj(t_vector vector, t_env *e, t_objs *obj)
 {
+	if (obj->id == SPH)
+		return (vector);
 	vector = rotate_obj_x(vector, e, obj);
 	vector = rotate_obj_y(vector, e, obj);
 	vector = rotate_obj_z(vector, e, obj);

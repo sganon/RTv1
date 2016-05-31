@@ -74,7 +74,8 @@ int		main(int argc, char **argv)
 		obj = (t_objs *)malloc(sizeof(t_objs));
 		if (!(init_env(e)))
 			return(0);
-		obj = parsing(argv[1], e, obj);
+		if (!(obj = parsing(argv[1], e, obj)))
+			ft_error("Parsing error", 2);
 		obj = manage_data(e, obj);
 		print_list(obj, e);
 		e->begin_list = obj;

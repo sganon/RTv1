@@ -44,7 +44,7 @@ void			plane_intersect(t_objs *obj, t_env *e, int shadow)
 	n = rotate_obj(n, e, obj);
 	n_scalar_vector = get_n_scalar_vector(e, n, shadow);
 	n_scalar_v = vector_scalar(n, v);
-	if (n_scalar_vector > 0)
+	if (n_scalar_vector > 0 && n_scalar_v > 0)
 		obj->s1 = (n_scalar_v + 3.) / n_scalar_vector;
 	else
 		obj->s1 = INT_MAX;
