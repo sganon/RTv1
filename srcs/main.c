@@ -56,6 +56,8 @@ int		main(int argc, char **argv)
 	{
 		e = (t_env *)malloc(sizeof(t_env));
 		obj = (t_objs *)malloc(sizeof(t_objs));
+		if (!e || !obj)
+			ft_error("Malloc error", 2);
 		if (!(init_env(e)))
 			return (0);
 		if (!extension(argv[1]))

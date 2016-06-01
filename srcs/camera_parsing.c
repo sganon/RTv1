@@ -37,10 +37,10 @@ void		check_format(char *str, int i)
 		if (!ft_isdigit(str[i]) && !ft_isspace(str[i]) && str[i] != ','
 				&& str[i] != '-' && str[i] != '.')
 		{
-			ft_error("Bad character for camera/object description.", 2);
+			ft_error("Bad character for camera/object/light description.", 2);
 		}
 		if (str[i] == '\n')
-			ft_error("')' expected for camera/object coordinate", 2);
+			ft_error("')' expected for camera/object/light coordinate", 2);
 		i++;
 	}
 }
@@ -48,7 +48,7 @@ void		check_format(char *str, int i)
 static void	check_cam_coord(char *str, int i, t_objs *obj)
 {
 	int		tmp;
-	char	buffer[12];
+	char	buffer[256];
 	int		step;
 
 	tmp = 0;
@@ -59,15 +59,15 @@ static void	check_cam_coord(char *str, int i, t_objs *obj)
 		if (str[i] == ',' || str[i] == ')')
 		{
 			stock_cam_coord(buffer, step, obj);
-			ft_bzero(buffer, 12);
+			ft_bzero(buffer, 256);
 			if (str[i] == ')')
 				break ;
 			tmp = 0;
 			step++;
 			i++;
 		}
-		if (tmp > 11)
-			ft_error("Int is too big.", 2);
+		if (tmp > 256)
+			ft_error("Coordinate is too big.", 2);
 		buffer[tmp] = str[i];
 		tmp++;
 	}

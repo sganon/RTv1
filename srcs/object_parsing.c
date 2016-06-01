@@ -14,7 +14,7 @@
 
 static void	get_coord(char *str, int i, t_objs *obj)
 {
-	char	buffer[12];
+	char	buffer[256];
 	int		tmp;
 	int		step;
 
@@ -26,15 +26,15 @@ static void	get_coord(char *str, int i, t_objs *obj)
 		if (str[i] == ',' || str[i] == ')')
 		{
 			parse_coord(buffer, step, obj);
-			ft_bzero(buffer, 12);
+			ft_bzero(buffer, 256);
 			if (str[i] == ')')
 				break ;
 			step++;
 			tmp = 0;
 			i++;
 		}
-		if (tmp > 11)
-			ft_error("Int is too big.", 2);
+		if (tmp > 255)
+			ft_error("Coordinate is too big.", 2);
 		buffer[tmp] = str[i];
 		tmp++;
 		i++;

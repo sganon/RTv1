@@ -15,11 +15,11 @@
 static void	stock_light_coord(char *str, t_light *light, int step)
 {
 	if (step == 0)
-		light->x = ft_atoi(str);
+		light->x = ft_atof(str);
 	if (step == 1)
-		light->y = ft_atoi(str);
+		light->y = ft_atof(str);
 	if (step == 2)
-		light->z = ft_atoi(str);
+		light->z = ft_atof(str);
 	if (step > 2)
 		ft_error("Too much coordinate for light: expected 3", 2);
 }
