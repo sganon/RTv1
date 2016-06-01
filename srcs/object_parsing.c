@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 static void	get_coord(char *str, int i, t_objs *obj)
 {

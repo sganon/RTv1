@@ -10,33 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
-#include <stdio.h>
-
-void	print_list(t_objs *obj, t_env *e)
+int		extension(char *s)
 {
-	t_light	*tmp_light;
+	int len;
 
-	tmp_light = e->light;
-	printf("Camera(%f, %f, %f)\n", e->cam.x, e->cam.y, e->cam.z);
-	printf("~~~~~~~~~~~~~~~~~\n");
-	printf("Camera_rotate(%f, %f, %f)\n", e->cam.rx, e->cam.ry, e->cam.rz);
-	while (obj)
-	{
-		printf("~~~~~~~~~~~~~~~~~\n");
-		printf(" id: %d\n pos_x: %f\n pos_y: %f\n pos_z: %f rx: %f ry: %f rz: %f\n", obj->id, obj->x, obj->y, obj->z, obj->rx, obj->ry, obj->rz);
-		if (obj->id == 6 || obj->id == CYL)
-			printf(" rayon: %f\n", obj->rayon);
-		printf("color: %d\n", obj->color);
-		obj = obj->next;
-	}
-	while(tmp_light)
-	{
-		printf("~~~~~~~~~~~~~~~~~\n");
-		printf("Light(%f, %f, %f)\n", tmp_light->x, tmp_light->y, tmp_light->z);
-		tmp_light = tmp_light->next;
-	}
+	len = ft_strlen(s);
+	if (s[len - 1] == 't' && s[len - 2] == 'r' && s[len - 3] == '.')
+		return (1);
+	else
+		return (0);
 }
 
 int		expose_hook(t_env *e)
@@ -73,11 +57,12 @@ int		main(int argc, char **argv)
 		e = (t_env *)malloc(sizeof(t_env));
 		obj = (t_objs *)malloc(sizeof(t_objs));
 		if (!(init_env(e)))
-			return(0);
+			return (0);
+		if (!extension(argv[1]))
+			ft_error("File need .rt extension", 2);
 		if (!(obj = parsing(argv[1], e, obj)))
 			ft_error("Parsing error", 2);
 		obj = manage_data(e, obj);
-		print_list(obj, e);
 		e->begin_list = obj;
 		mlx_expose_hook(e->win, expose_hook, e);
 		mlx_key_hook(e->win, key_events, e);

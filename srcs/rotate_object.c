@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 t_vector	rotate_obj_z(t_vector vector, t_env *e, t_objs *obj)
 {

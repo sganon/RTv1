@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 t_vector	normalize_vector(t_vector v)
 {

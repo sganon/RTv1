@@ -10,14 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
-
-#include <stdio.h>
+#include "rtv1.h"
 
 void	parse_coord(char *str, int step, t_objs *obj)
 {
 	if (step > 6 && obj->id != SPH && obj->id != CYL)
-		ft_error("Too much argument for sphere declaration, expcted: 7", 2);
+		ft_error("Too much argument for object declaration, expcted: 7", 2);
 	if (step > 7 && (obj->id == SPH || obj->id == CYL))
 		ft_error("Too much argument for object declaration, expcted: 8", 2);
 	if (step == 0)

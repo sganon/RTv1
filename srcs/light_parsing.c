@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 static void	stock_light_coord(char *str, t_light *light, int step)
 {

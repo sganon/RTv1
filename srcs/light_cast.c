@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 static t_vector	get_normal(t_objs *obj, t_env *e)
 {
@@ -30,9 +30,9 @@ static t_vector	get_normal(t_objs *obj, t_env *e)
 	}
 	else
 	{
-		normal.x = -(e->light_inter.x - e->vector.rx);
+		normal.x = (e->light_inter.x - obj->x);
 		normal.y = 0;
-		normal.z = -(e->light_inter.z - e->vector.rz);
+		normal.z = (e->light_inter.z - obj->z);
 	}
 	return (normalize_vector(normal));
 }
@@ -79,8 +79,8 @@ static double	non_plan_light_cast(t_env *e, t_objs *obj)
 	e->lvector = normalize_vector(e->lvector);
 	obj->sh = 1;
 	tmp = e->begin_list;
-	cosi = 0.5 * vector_scalar(normal, e->lvector) + specular_light(e, e->
-		lvector, normal) * 0.5;
+	cosi = 0.3 * vector_scalar(normal, e->lvector) + specular_light(e, e->
+		lvector, normal) * 0.7;
 	if (shadow(tmp, e))
 		return (cosi / 2);
 	return (cosi);

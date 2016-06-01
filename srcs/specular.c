@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 static t_vector	get_ref(t_vector light, t_vector normal, t_env *e)
 {

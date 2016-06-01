@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 t_cam	rotate_cam_z(t_cam cam, t_env *e)
 {
@@ -67,4 +67,3 @@ t_cam	rotate_cam(t_cam cam, t_env *e)
 	cam = rotate_cam_z(cam, e);
 	return (cam);
 }
-

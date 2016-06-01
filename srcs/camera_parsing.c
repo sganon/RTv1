@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 static void	stock_cam_coord(char *str, int step, t_objs *obj)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 static void	sphere_abc(t_env *e, t_vector vector, t_vector v, t_objs *obj)
 {
@@ -40,12 +40,12 @@ void		get_abc(t_env *e, t_objs *obj, int shadow)
 
 	if (shadow == 2)
 	{
-		vec = rotate_obj(e->lvector, e, obj);
+		vec = normalize_vector(rotate_obj(e->lvector, e, obj));
 		v = cam_object_vector(e->light_inter, obj, e, shadow);
 	}
 	else
 	{
-		vec = rotate_obj(e->vector, e, obj);
+		vec = normalize_vector(rotate_obj(e->vector, e, obj));
 		v = cam_object_vector(e->cam, obj, e, shadow);
 	}
 	if (obj->id == SPH)

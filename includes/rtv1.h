@@ -16,28 +16,28 @@
 # include "../mlx/mlx.h"
 # include <math.h>
 
-# define WIN_X	1000
-# define WIN_Y	1000
-# define FOV	66
+# define WIN_X		1000
+# define WIN_Y		1000
+# define FOV		66
 
-# define SPH	6
-# define CYL	8
-# define CON	4
-# define PLA	5
+# define SPH		6
+# define CYL		8
+# define CON		4
+# define PLA		5
 
-# define INT_MAX	2147483647 
+# define INT_MAX	2147483647
 
-# define ESC	53
-# define W_KEY	13
-# define S_KEY	1
-# define A_KEY	0
-# define D_KEY	2
-# define Q_KEY	12
-# define E_KEY	14
-# define UP_KEY	126
+# define ESC		53
+# define W_KEY		13
+# define S_KEY		1
+# define A_KEY		0
+# define D_KEY		2
+# define Q_KEY		12
+# define E_KEY		14
+# define UP_KEY		126
 # define DOWN_KEY	125
 
-# define SQR(x)	(x * x)
+# define SQR(x)		(x * x)
 
 typedef unsigned char	t_bytes;
 
@@ -74,22 +74,6 @@ typedef struct			s_vector
 	double				rz;
 }						t_vector;
 
-/* obj id :
- * 0 = camera;
- * 6 = sphere;
- * 5 = plan;
- * 4 = cone;
- * 8 = cylindre;
- */
-
-/* obj color:
- * 0 = white
- * 1 = red
- * 2 = blue
- * 3 = green
- * 4 = yellow
- */
-
 typedef struct			s_objs
 {
 	int					id;
@@ -104,7 +88,7 @@ typedef struct			s_objs
 	int					sh;
 	double				s1;
 	double				s2;
-	struct s_objs 		*next;
+	struct s_objs		*next;
 }						t_objs;
 
 typedef struct			s_col
@@ -114,7 +98,7 @@ typedef struct			s_col
 	t_objs				*obj;
 }						t_col;
 
-typedef struct 			s_light
+typedef struct			s_light
 {
 	double				x;
 	double				y;
@@ -157,7 +141,8 @@ int						expose_hook(t_env *e);
 int						key_events(int key, t_env *e);
 int						get_camera(char *str, t_objs *obj);
 int						get_obj_type(char *str);
-int						check_for_closer_obj(t_objs *obj, t_objs * tmp, t_env *e);
+int						check_for_closer_obj(t_objs *obj, t_objs *tmp, t_env *e
+);
 int						shadow(t_objs *obj, t_env *e);
 char					*ft_trim(char *str);
 void					plane_intersect(t_objs *obj, t_env *e, int shadow);
@@ -173,7 +158,8 @@ t_objs					*get_obj(char *str, t_objs *obj);
 t_objs					*parsing(char *filename, t_env *e, t_objs *obj);
 t_vector				normalize_vector(t_vector vector);
 t_vector				new_vector(t_vector v1, t_vector v2);
-t_vector				cam_object_vector(t_cam cam, t_objs *obj, t_env *e, int shadow);
+t_vector				cam_object_vector(t_cam cam, t_objs *obj, t_env *e, int
+	shadow);
 t_vector				cam_plane_vector(t_cam cam, t_objs *obj, t_env *e);
 t_vector				cam_light_vector(t_cam cam, t_light *light);
 t_vector				rotate_obj(t_vector vector, t_env *e, t_objs *obj);
@@ -182,7 +168,8 @@ t_vector				rotate_y(t_vector vector, t_env *e, double rot);
 t_vector				rotate_z(t_vector vector, t_env *e, double rot);
 t_cam					rotate_cam(t_cam cam, t_env *e);
 double					vector_scalar(t_vector vect1, t_vector vect2);
-double					specular_light(t_env *e, t_vector light, t_vector normal);
+double					specular_light(t_env *e, t_vector light, t_vector normal
+);
 double					get_norme(t_objs *obj);
 
-# endif
+#endif

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 int		key_events(int key, t_env *e)
 {
@@ -28,9 +28,9 @@ int		key_events(int key, t_env *e)
 		e->cam.y += 1;
 	if (key == DOWN_KEY)
 		e->cam.y -= 1;
-	if (key == Q_KEY && (e->cam.rx += 10) < 36000.0)
+	if (key == Q_KEY && (e->cam.rx * 100 + 2) < 36000.0)
 		e->cam.ry += 2;
-	if (key == E_KEY && (e->cam.rx -= 10) > -29999.0)
+	if (key == E_KEY && (e->cam.rx * 100 - 2) > -29999.0)
 		e->cam.ry -= 2;
 	expose_hook(e);
 	return (1);

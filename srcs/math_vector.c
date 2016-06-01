@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RTv1.h"
+#include "rtv1.h"
 
 t_vector	cam_object_vector(t_cam cam, t_objs *obj, t_env *e, int shadow)
 {
@@ -24,10 +24,13 @@ t_vector	cam_object_vector(t_cam cam, t_objs *obj, t_env *e, int shadow)
 		new_vector = rotate_x(new_vector, e, e->cam.rx);
 		new_vector = rotate_y(new_vector, e, e->cam.ry);
 		new_vector = rotate_z(new_vector, e, e->cam.rz);
-	}	
-	new_vector = rotate_x(new_vector, e, cam.rx);
-	new_vector = rotate_y(new_vector, e, cam.ry);
-	new_vector = rotate_z(new_vector, e, cam.rz);
+	}
+	else
+	{
+		new_vector = rotate_x(new_vector, e, cam.rx);
+		new_vector = rotate_y(new_vector, e, cam.ry);
+		new_vector = rotate_z(new_vector, e, cam.rz);
+	}
 	return (new_vector);
 }
 
